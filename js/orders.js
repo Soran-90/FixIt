@@ -214,6 +214,7 @@ async function submitRating(orderId, rating, reasons = {}) {
 function translateStatus(status) {
   switch (status) {
     case "pending": return "قيد الانتظار";
+    case "assigned": return "تم إسناده لعامل";
     case "accepted": return "تم قبول الطلب";
     case "completed": return "مكتمل";
     default: return status;
