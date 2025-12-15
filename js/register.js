@@ -1,10 +1,11 @@
 import { auth, db } from "./firebase.js";
+import { i18nReady, t } from "./i18n.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-console.log("✅ register.js loaded");
-
 const registerBtn = document.getElementById("registerBtn");
+
+await i18nReady;
 
 registerBtn.addEventListener("click", async () => {
   console.log("🟢 زر إنشاء الحساب تم الضغط عليه");
@@ -15,7 +16,7 @@ registerBtn.addEventListener("click", async () => {
   const password = document.getElementById("password").value.trim();
 
   if (!name || !email || !phone || !password) {
-    alert("يرجى ملء جميع الحقول");
+    alert(t("register.validation.missing"));
     return;
   }
 
@@ -31,11 +32,11 @@ registerBtn.addEventListener("click", async () => {
       createdAt: new Date()
     });
 
-    alert("✅ تم إنشاء الحساب بنجاح");
+    alert(t("register.success"));
     window.location.href = "home.html";
 
   } catch (e) {
     console.error("❌ خطأ Firebase:", e);
-    alert("خطأ: " + e.message);
+    alert(`${t("register.failurePrefix")} ${e.message}`);
   }
 });

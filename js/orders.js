@@ -1,4 +1,5 @@
 import { auth, db } from "./firebase.js";
+import { i18nReady, t } from "./i18n.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import {
   collection,
@@ -13,7 +14,10 @@ import {
 
 const container = document.getElementById("ordersContainer");
 const liveBanner = document.getElementById("ordersLiveBanner");
+const loadingText = document.getElementById("loadingText");
 let unsubscribeOrders = null;
+
+await i18nReady;
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
@@ -21,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 function subscribeToOrders(userId) {
-  container.innerHTML = "⏳ جاري تحميل طلباتك...";
+  container.innerHTML = t("orders.loading", "⏳");
   const q = query(collection(db, "orders"), where("userId", "==", userId));
 
   if (unsubscribeOrders) unsubscribeOrders();
@@ -29,19 +33,21 @@ function subscribeToOrders(userId) {
   let initialized = false;
   unsubscribeOrders = onSnapshot(q, async (snapshot) => {
     await renderOrders(snapshot);
+    if (loadingText) loadingText.style.display = "none";
     if (initialized) {
-      showBanner("🔔 تم تحديث حالة طلباتك لحظيًا");
+      showBanner(t("orders.banner.updated"));
     }
     initialized = true;
   }, (err) => {
-    container.innerHTML = "❌ تعذر تحميل الطلبات الآن";
+    container.innerHTML = t("orders.error");
+    if (loadingText) loadingText.style.display = "none";
     console.error("realtime orders error", err);
   });
 }
 
 async function renderOrders(snapshot) {
   if (snapshot.empty) {
-    container.innerHTML = "لا توجد طلبات";
+    container.innerHTML = t("orders.empty");
     return;
   }
 
@@ -65,8 +71,8 @@ async function renderOrders(snapshot) {
       if (workerSnap.exists()) {
         const worker = workerSnap.data();
         workerInfo = `
-          <p><strong>العامل:</strong> ${worker.name || worker.email}</p>
-          <p><strong>تقييم العامل:</strong> ⭐ ${worker.ratingAvg || 0}</p>
+          <p><strong>${t("orders.field.worker")}</strong> ${worker.name || worker.email}</p>
+          <p><strong>${t("orders.field.workerRating")}</strong> ⭐ ${worker.ratingAvg || 0}</p>
         `;
       }
     }
@@ -74,28 +80,28 @@ async function renderOrders(snapshot) {
     // ⭐ واجهة التقييم (إذا مكتمل ولم يُقيّم)
     if (order.status === "completed" && !order.rated) {
       ratingUI = `
-        <label>قيّم العامل:</label>
-        <select id="rating-${orderId}">
-          <option value="">اختر التقييم</option>
+        <label>${t("orders.rating.prompt")}</label>
+        <select id="rating-${orderId}" aria-label="${t("orders.rating.prompt")}">
+          <option value="">${t("orders.rating.placeholder")}</option>
           <option value="1">⭐</option>
           <option value="2">⭐⭐</option>
           <option value="3">⭐⭐⭐</option>
           <option value="4">⭐⭐⭐⭐</option>
           <option value="5">⭐⭐⭐⭐⭐</option>
         </select>
-        <button data-id="${orderId}">إرسال التقييم</button>
+        <button data-id="${orderId}">${t("orders.rating.submit")}</button>
       `;
     }
 
     // ⭐ عرض التقييم إذا موجود
     if (order.rated) {
-      ratingUI = `<p>تقييمك: ${"⭐".repeat(order.rating)}</p>`;
+      ratingUI = `<p>${t("orders.rating.yours")}&nbsp;${"⭐".repeat(order.rating)}</p>`;
     }
 
     div.innerHTML = `
-      <p><strong>الخدمة:</strong> ${order.serviceType}</p>
-      <p><strong>الوصف:</strong> ${order.description}</p>
-      <p><strong>الحالة:</strong> ${translateStatus(order.status)}</p>
+      <p><strong>${t("orders.field.service")}</strong> ${order.serviceType}</p>
+      <p><strong>${t("orders.field.description")}</strong> ${order.description}</p>
+      <p><strong>${t("orders.field.status")}</strong> ${t(`status.${order.status}`, order.status)}</p>
       ${workerInfo}
       ${ratingUI}
       <hr>
@@ -106,7 +112,7 @@ async function renderOrders(snapshot) {
       div.querySelector("button").addEventListener("click", async () => {
         const ratingValue = div.querySelector(`#rating-${orderId}`).value;
         if (!ratingValue) {
-          alert("يرجى اختيار التقييم");
+          alert(t("orders.rating.required"));
           return;
         }
         await submitRating(orderId, Number(ratingValue));
@@ -153,21 +159,12 @@ async function submitRating(orderId, rating) {
       ratingAvg: Number(avg)
     });
 
-    alert("✅ تم إرسال التقييم بنجاح");
+    alert(t("orders.rating.saved"));
     location.reload();
 
   } catch (e) {
-    alert("❌ فشل إرسال التقييم");
+    alert(t("orders.rating.failed"));
     console.error(e);
-  }
-}
-
-function translateStatus(status) {
-  switch (status) {
-    case "pending": return "قيد الانتظار";
-    case "accepted": return "تم قبول الطلب";
-    case "completed": return "مكتمل";
-    default: return status;
   }
 }
 

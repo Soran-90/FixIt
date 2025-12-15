@@ -28,8 +28,13 @@ function login() {
     const key = getCurrentKey();
     const items = document.querySelectorAll('.bottom-nav .nav-item');
     items.forEach(i => {
-      if (i.dataset.key === key) i.classList.add('active');
-      else i.classList.remove('active');
+      if (i.dataset.key === key) {
+        i.classList.add('active');
+        i.setAttribute('aria-current', 'page');
+      } else {
+        i.classList.remove('active');
+        i.removeAttribute('aria-current');
+      }
     });
   }
 

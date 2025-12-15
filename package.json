@@ -1,0 +1,15 @@
+{
+  "name": "fixit",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:static": "http-server . -p 4173 -c-1",
+    "axe:check": "axe http://localhost:4173/home.html http://localhost:4173/orders.html http://localhost:4173/profile.html --exit",
+    "test:accessibility": "start-server-and-test start:static http://localhost:4173 axe:check"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.9.1",
+    "http-server": "^14.1.1",
+    "start-server-and-test": "^2.0.3"
+  }
+}

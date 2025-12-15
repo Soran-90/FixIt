@@ -1,24 +1,29 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <title>إنشاء حساب - FixIt</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page-title-key="page.registerTitle">
 
   <div class="form-container">
-    <h2>إنشاء حساب جديد</h2>
+    <h2 data-i18n="register.title">إنشاء حساب جديد</h2>
 
-    <input id="name" type="text" placeholder="الاسم الكامل">
-    <input id="email" type="email" placeholder="البريد الإلكتروني">
-    <input id="phone" type="text" placeholder="رقم الهاتف">
-    <input id="password" type="password" placeholder="كلمة المرور">
+    <label class="sr-only" for="name" data-i18n="register.name">الاسم الكامل</label>
+    <input id="name" type="text" data-i18n="register.name" data-i18n-attr="placeholder,aria-label" placeholder="الاسم الكامل">
+    <label class="sr-only" for="email" data-i18n="register.email">البريد الإلكتروني</label>
+    <input id="email" type="email" data-i18n="register.email" data-i18n-attr="placeholder,aria-label" placeholder="البريد الإلكتروني">
+    <label class="sr-only" for="phone" data-i18n="register.phone">رقم الهاتف</label>
+    <input id="phone" type="text" data-i18n="register.phone" data-i18n-attr="placeholder,aria-label" placeholder="رقم الهاتف">
+    <label class="sr-only" for="password" data-i18n="register.password">كلمة المرور</label>
+    <input id="password" type="password" data-i18n="register.password" data-i18n-attr="placeholder,aria-label" placeholder="كلمة المرور">
 
-    <button id="registerBtn">إنشاء الحساب</button>
+    <button id="registerBtn" data-i18n="register.submit">إنشاء الحساب</button>
   </div>
 
   <!-- سكربتات Firebase -->
+  <script type="module" src="./js/i18n.js"></script>
   <script type="module" src="./js/firebase.js"></script>
   <script type="module" src="./js/register.js"></script>
 

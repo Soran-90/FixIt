@@ -6,55 +6,61 @@
     <title>FixIt - الملف الشخصي</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body dir="rtl">
+<body data-page-title-key="page.profileTitle">
 
-    <h2 class="title">الملف الشخصي</h2>
+    <h2 class="title" data-i18n="profile.title">الملف الشخصي</h2>
 
     <div class="profile-info">
-        <p>اسم العميل: أحمد</p>
-        <p>رقم الهاتف: 0770xxxxxxx</p>
-        <p>اللغة: العربية</p>
-        <p>طرق الدفع: عند الاستلام</p>
+        <p><span data-i18n="profile.customerName">اسم العميل</span>: <span aria-label="Customer name">أحمد</span></p>
+        <p><span data-i18n="profile.phone">رقم الهاتف</span>: <span aria-label="Customer phone">0770xxxxxxx</span></p>
+        <p data-i18n="profile.payment">طرق الدفع: عند الاستلام</p>
+        <label for="languageSelect" data-i18n="profile.language.label">اللغة</label>
+        <small id="languageHelp" data-i18n="profile.language.help">اختر لغة واجهة FixIt</small>
+        <select id="languageSelect" aria-describedby="languageHelp">
+          <option value="ar" data-i18n="profile.language.option.ar">العربية</option>
+          <option value="en" data-i18n="profile.language.option.en">الإنجليزية</option>
+        </select>
     </div>
 
     <section aria-label="notification settings" style="margin-top:20px;">
-      <h3 class="title">إعدادات الإشعارات</h3>
+      <h3 class="title" data-i18n="profile.notifications.title">إعدادات الإشعارات</h3>
       <div class="switch-field">
-        <label for="notif-order">تحديثات حالة الطلب</label>
+        <label for="notif-order" data-i18n="profile.notifications.order">تحديثات حالة الطلب</label>
         <input type="checkbox" id="notif-order" checked>
       </div>
       <div class="switch-field">
         <div>
-          <label for="notif-general">إشعارات عامة</label>
-          <small>عروض، نصائح، وأخبار FixIt</small>
+          <label for="notif-general" data-i18n="profile.notifications.general">إشعارات عامة</label>
+          <small data-i18n="profile.notifications.generalHelp">عروض، نصائح، وأخبار FixIt</small>
         </div>
         <input type="checkbox" id="notif-general" checked>
       </div>
-      <button id="saveNotifPrefs" style="width:100%; margin-top:12px;">حفظ التفضيلات</button>
+      <button id="saveNotifPrefs" style="width:100%; margin-top:12px;" data-i18n="profile.notifications.save">حفظ التفضيلات</button>
       <p id="notifPrefsStatus" aria-live="polite"></p>
     </section>
 
+    <script type="module" src="js/i18n.js"></script>
     <script src="js/app.js"></script>
     <!-- START Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="home.html" class="nav-item">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-label">الرئيسية</div>
+<nav class="bottom-nav" role="navigation" data-i18n="nav.bottomLabel" data-i18n-attr="aria-label" aria-label="التنقل الرئيسي">
+  <a href="home.html" class="nav-item" data-key="home" data-i18n="nav.home" data-i18n-attr="aria-label,title">
+    <div class="nav-icon" aria-hidden="true">🏠</div>
+    <div class="nav-label" data-i18n="nav.home">الرئيسية</div>
   </a>
 
-  <a href="orders.html" class="nav-item">
-    <div class="nav-icon">📋</div>
-    <div class="nav-label">طلباتي</div>
+  <a href="orders.html" class="nav-item" data-key="orders" data-i18n="nav.orders" data-i18n-attr="aria-label,title">
+    <div class="nav-icon" aria-hidden="true">📋</div>
+    <div class="nav-label" data-i18n="nav.orders">طلباتي</div>
   </a>
 
-  <a href="search.html" class="nav-item">
-    <div class="nav-icon">🔍</div>
-    <div class="nav-label">بحث</div>
+  <a href="search.html" class="nav-item" data-key="search" data-i18n="nav.search" data-i18n-attr="aria-label,title">
+    <div class="nav-icon" aria-hidden="true">🔍</div>
+    <div class="nav-label" data-i18n="nav.search">بحث</div>
   </a>
 
-  <a href="profile.html" class="nav-item">
-    <div class="nav-icon">👤</div>
-    <div class="nav-label">حسابي</div>
+  <a href="profile.html" class="nav-item" data-key="profile" data-i18n="nav.profile" data-i18n-attr="aria-label,title">
+    <div class="nav-icon" aria-hidden="true">👤</div>
+    <div class="nav-label" data-i18n="nav.profile">حسابي</div>
   </a>
 </nav>
 

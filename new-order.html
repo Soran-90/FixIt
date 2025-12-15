@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>طلب خدمة جديدة - FixIt</title>
@@ -7,32 +7,38 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-page-title-key="page.newOrderTitle">
 
 <div class="form-container">
-  <h2>طلب خدمة جديدة</h2>
+  <h2 data-i18n="newOrder.title">طلب خدمة جديدة</h2>
 
-  <select id="serviceType">
-    <option value="">اختر نوع الخدمة</option>
-    <option value="كهرباء">كهرباء</option>
-    <option value="سباكة">سباكة</option>
-    <option value="تكييف">تكييف</option>
-    <option value="نجارة">نجارة</option>
+  <label for="serviceType" data-i18n="newOrder.service.label">نوع الخدمة</label>
+  <select id="serviceType" data-i18n="newOrder.service.placeholder" data-i18n-attr="aria-label">
+    <option value="" data-i18n="newOrder.service.placeholder">اختر نوع الخدمة</option>
+    <option value="كهرباء" data-i18n="service.electric">كهرباء</option>
+    <option value="سباكة" data-i18n="service.plumbing">سباكة</option>
+    <option value="تكييف" data-i18n="service.ac">تكييف</option>
+    <option value="نجارة" data-i18n="service.carpentry">نجارة</option>
   </select>
 
-  <textarea id="description" placeholder="اشرح العطل بالتفصيل"></textarea>
+  <label class="sr-only" for="description" data-i18n="newOrder.description.placeholder">اشرح العطل بالتفصيل</label>
+  <textarea id="description" data-i18n="newOrder.description.placeholder" data-i18n-attr="placeholder,aria-label" placeholder="اشرح العطل بالتفصيل"></textarea>
 
-  <input id="address" type="text" placeholder="العنوان الكامل">
+  <label class="sr-only" for="address" data-i18n="newOrder.address.placeholder">العنوان الكامل</label>
+  <input id="address" type="text" data-i18n="newOrder.address.placeholder" data-i18n-attr="placeholder,aria-label" placeholder="العنوان الكامل">
 
-  <button id="getLocationBtn">📍 تحديد موقعي</button>
-  <p id="locationStatus"></p>
+  <button id="getLocationBtn" data-i18n="newOrder.location.button">📍 تحديد موقعي</button>
+  <p id="locationStatus" aria-live="polite"></p>
 
+  <label for="date" data-i18n="newOrder.date.label">التاريخ</label>
   <input id="date" type="date">
+  <label for="time" data-i18n="newOrder.time.label">الوقت</label>
   <input id="time" type="time">
 
-  <button id="submitOrder">إرسال الطلب</button>
+  <button id="submitOrder" data-i18n="newOrder.submit">إرسال الطلب</button>
 </div>
 
+<script type="module" src="js/i18n.js"></script>
 <script type="module" src="js/auth-guard.js"></script>
 <script type="module" src="js/new-order.js"></script>
 

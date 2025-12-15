@@ -1,14 +1,17 @@
 import { auth } from "./firebase.js";
+import { i18nReady, t } from "./i18n.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 const loginBtn = document.getElementById("loginBtn");
+
+await i18nReady;
 
 loginBtn.addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
   if (!email || !password) {
-    alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+    alert(t("login.validation.missing"));
     return;
   }
 
@@ -19,6 +22,6 @@ loginBtn.addEventListener("click", async () => {
     window.location.href = "home.html";
 
   } catch (e) {
-    alert("❌ خطأ في بيانات الدخول");
+    alert(t("login.error.auth"));
   }
 });

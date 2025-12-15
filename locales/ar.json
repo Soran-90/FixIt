@@ -1,0 +1,98 @@
+{
+  "app.name": "FixIt",
+  "nav.home": "الرئيسية",
+  "nav.orders": "طلباتي",
+  "nav.search": "بحث",
+  "nav.profile": "حسابي",
+  "nav.bottomLabel": "التنقل الرئيسي",
+  "page.indexTitle": "FixIt - تسجيل الدخول",
+  "page.loginTitle": "تسجيل الدخول - FixIt",
+  "page.registerTitle": "إنشاء حساب - FixIt",
+  "page.homeTitle": "FixIt - الرئيسية",
+  "page.ordersTitle": "طلباتي - FixIt",
+  "page.searchTitle": "FixIt - البحث",
+  "page.profileTitle": "FixIt - الملف الشخصي",
+  "page.newOrderTitle": "طلب خدمة جديدة - FixIt",
+  "home.heading": "جميع خدمات الصيانة",
+  "service.electric": "كهرباء",
+  "service.plumbing": "سباكة",
+  "service.ac": "تكييف",
+  "service.carpentry": "نجارة",
+  "service.paint": "دهانات",
+  "orders.title": "طلباتي",
+  "orders.liveBanner": "🔄 يتم تحديث حالة الطلبات مباشرةً...",
+  "orders.loading": "جاري تحميل الطلبات...",
+  "orders.empty": "لا توجد طلبات",
+  "orders.error": "❌ تعذر تحميل الطلبات الآن",
+  "orders.banner.updated": "🔔 تم تحديث حالة طلباتك لحظيًا",
+  "orders.field.service": "الخدمة:",
+  "orders.field.description": "الوصف:",
+  "orders.field.status": "الحالة:",
+  "orders.field.worker": "العامل:",
+  "orders.field.workerRating": "تقييم العامل:",
+  "orders.rating.prompt": "قيّم العامل:",
+  "orders.rating.placeholder": "اختر التقييم",
+  "orders.rating.submit": "إرسال التقييم",
+  "orders.rating.saved": "✅ تم إرسال التقييم بنجاح",
+  "orders.rating.failed": "❌ فشل إرسال التقييم",
+  "orders.rating.required": "يرجى اختيار التقييم",
+  "orders.rating.yours": "تقييمك:",
+  "status.pending": "قيد الانتظار",
+  "status.accepted": "تم قبول الطلب",
+  "status.completed": "مكتمل",
+  "status.assigned": "تم تعيين عامل",
+  "newOrder.title": "طلب خدمة جديدة",
+  "newOrder.service.label": "نوع الخدمة",
+  "newOrder.service.placeholder": "اختر نوع الخدمة",
+  "newOrder.description.placeholder": "اشرح العطل بالتفصيل",
+  "newOrder.address.placeholder": "العنوان الكامل",
+  "newOrder.location.button": "📍 تحديد موقعي",
+  "newOrder.location.loading": "⏳ جاري تحديد الموقع...",
+  "newOrder.location.success": "✅ تم تحديد الموقع",
+  "newOrder.location.denied": "❌ لم يتم السماح بتحديد الموقع",
+  "newOrder.date.label": "التاريخ",
+  "newOrder.time.label": "الوقت",
+  "newOrder.submit": "إرسال الطلب",
+  "newOrder.validation.missing": "يرجى ملء جميع الحقول",
+  "newOrder.validation.location": "يرجى تحديد الموقع",
+  "newOrder.success": "✅ تم إرسال الطلب بنجاح",
+  "newOrder.failure": "❌ فشل إرسال الطلب",
+  "newOrder.noGPS": "المتصفح لا يدعم GPS",
+  "login.title": "تسجيل الدخول",
+  "login.email": "البريد الإلكتروني أو رقم الهاتف",
+  "login.password": "كلمة المرور",
+  "login.submit": "تسجيل الدخول",
+  "login.noAccount": "ليس لديك حساب؟",
+  "login.registerLink": "إنشاء حساب",
+  "login.validation.missing": "يرجى إدخال البريد الإلكتروني وكلمة المرور",
+  "login.error.auth": "❌ خطأ في بيانات الدخول",
+  "register.title": "إنشاء حساب جديد",
+  "register.name": "الاسم الكامل",
+  "register.email": "البريد الإلكتروني",
+  "register.phone": "رقم الهاتف",
+  "register.password": "كلمة المرور",
+  "register.submit": "إنشاء الحساب",
+  "register.validation.missing": "يرجى ملء جميع الحقول",
+  "register.success": "✅ تم إنشاء الحساب بنجاح",
+  "register.failurePrefix": "خطأ:",
+  "profile.title": "الملف الشخصي",
+  "profile.customerName": "اسم العميل",
+  "profile.phone": "رقم الهاتف",
+  "profile.language.label": "اللغة",
+  "profile.language.help": "اختر لغة واجهة FixIt",
+  "profile.language.option.ar": "العربية",
+  "profile.language.option.en": "الإنجليزية",
+  "profile.payment": "طرق الدفع: عند الاستلام",
+  "profile.notifications.title": "إعدادات الإشعارات",
+  "profile.notifications.order": "تحديثات حالة الطلب",
+  "profile.notifications.general": "إشعارات عامة",
+  "profile.notifications.generalHelp": "عروض، نصائح، وأخبار FixIt",
+  "profile.notifications.save": "حفظ التفضيلات",
+  "profile.notifications.loadingError": "❌ تعذر تحميل الإعدادات",
+  "profile.notifications.saveSuccess": "✅ تم حفظ التفضيلات",
+  "profile.notifications.saveFailed": "❌ فشل الحفظ",
+  "profile.notifications.saving": "جارٍ الحفظ...",
+  "search.title": "بحث عن خدمة",
+  "search.placeholder": "اكتب اسم الخدمة…",
+  "notifications.open": "عرض الإشعارات"
+}

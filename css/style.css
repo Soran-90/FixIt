@@ -1,7 +1,35 @@
 body {
     font-family: sans-serif;
-    background: #f7f7f7;
+    background: #f4f6fb;
+    color: #1b1b1b;
     padding: 20px;
+    line-height: 1.6;
+}
+
+a {
+    color: #0b5ed7;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.service-card:focus-visible,
+.nav-item:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 .title {
@@ -17,23 +45,34 @@ body {
     box-shadow: 0 0 10px #ddd;
 }
 
-input {
+input, select, textarea {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
     border-radius: 8px;
-    border: 1px solid #bbb;
+    border: 1px solid #7a869a;
+    background-color: #fff;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
 button {
     width: 100%;
     padding: 12px;
     margin-top: 15px;
-    background: #007bff;
+    background: #0b5ed7;
     border: none;
     color: #fff;
     border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #0a53be;
 }
 
 .services {
@@ -47,6 +86,14 @@ button {
     background: white;
     border-radius: 12px;
     box-shadow: 0 0 10px #ddd;
+    border: 1px solid #d6deea;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.service-card:hover,
+.service-card:focus-visible {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 }
 
 .order-card.done {
@@ -67,11 +114,12 @@ button {
   justify-content: space-between;
   padding: 8px 10px;
   z-index: 1000;
+  border: 1px solid #d6deea;
 }
 
 .bottom-nav .nav-item {
   text-decoration: none;
-  color: #555;
+  color: #1f2a44;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -93,8 +141,8 @@ button {
 
 .bottom-nav .nav-item.active,
 .bottom-nav .nav-item:hover {
-  color: #0066ff;
-  background: rgba(0,102,255,0.06);
+  color: #0b5ed7;
+  background: #e6f0ff;
   transform: translateY(-2px);
 }
 
@@ -139,63 +187,12 @@ button {
     margin-top: 15px;
     font-size: 15px;
 }
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: space-around;
-  border-top: 1px solid #ddd;
-  padding: 6px 0;
-  z-index: 1000;
-}
-
-.nav-item {
-  flex: 1;
-  text-align: center;
-  font-size: 12px;
-  color: #555;
-  text-decoration: none;
-}
-
-.nav-icon {
-  font-size: 20px;
-  display: block;
-}
-
-.nav-item.active {
-  color: #0d6efd;
-  font-weight: bold;
-}
-
-.order-card {
-  background: #fff;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
 .status.pending {
-  color: orange;
+  color: #b26a00;
 }
 
 .status.completed {
-  color: green;
-}
-.order-card { 
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-.order-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 6px;
+  color: #0f7a0f;
 }
 
 /* إشعارات لحظية */
@@ -317,11 +314,11 @@ button.dash-card {
   cursor: pointer;
 }
 .order-card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  background: #fafafa;
+  border: 1px solid #d6deea;
+  padding: 16px;
+  margin: 12px 10px;
+  border-radius: 10px;
+  background: #ffffff;
 }
 .user-card {
   border: 1px solid #ccc;
@@ -329,13 +326,6 @@ button.dash-card {
   margin: 10px;
   border-radius: 8px;
   background: #fdfdfd;
-}
-.order-card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  background: #fafafa;
 }
 .accept-btn {
   background: #4CAF50;
@@ -352,14 +342,6 @@ button.dash-card {
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
-  margin-top: 6px;
-}
-select {
-  padding: 4px;
-  margin-top: 5px;
-}
-
-button {
   margin-top: 6px;
 }
 .top-bar {

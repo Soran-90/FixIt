@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>تسجيل الدخول - FixIt</title>
@@ -7,22 +7,24 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-page-title-key="page.loginTitle">
 
   <div class="form-container">
-    <h2>تسجيل الدخول</h2>
+    <h2 data-i18n="login.title">تسجيل الدخول</h2>
 
-    <input id="email" type="email" placeholder="البريد الإلكتروني">
-    <input id="password" type="password" placeholder="كلمة المرور">
+    <label class="sr-only" for="email" data-i18n="login.email">البريد الإلكتروني</label>
+    <input id="email" type="email" data-i18n="login.email" data-i18n-attr="placeholder,aria-label" placeholder="البريد الإلكتروني">
+    <label class="sr-only" for="password" data-i18n="login.password">كلمة المرور</label>
+    <input id="password" type="password" data-i18n="login.password" data-i18n-attr="placeholder,aria-label" placeholder="كلمة المرور">
 
-    <button id="loginBtn">تسجيل الدخول</button>
+    <button id="loginBtn" data-i18n="login.submit">تسجيل الدخول</button>
 
     <p class="alt-link">
-      ليس لديك حساب؟ <a href="register.html">إنشاء حساب</a>
+      <span data-i18n="login.noAccount">ليس لديك حساب؟</span> <a href="register.html" data-i18n="login.registerLink">إنشاء حساب</a>
     </p>
   </div>
 
-  <!-- 🔴 هذا السطر هو الأهم -->
+  <script type="module" src="js/i18n.js"></script>
   <script type="module" src="js/login.js"></script>
 
 </body>

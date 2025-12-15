@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>طلباتي - FixIt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page-title-key="page.ordersTitle">
 
   <!-- العنوان -->
-  <h2 class="page-title">طلباتي</h2>
+  <h2 class="page-title" data-i18n="orders.title">طلباتي</h2>
 
-  <div id="ordersLiveBanner" class="info-banner" style="display:none;">
+  <div id="ordersLiveBanner" class="info-banner" style="display:none;" data-i18n="orders.liveBanner" role="status" aria-live="polite">
     🔄 يتم تحديث حالة الطلبات مباشرةً...
   </div>
 
   <!-- نص التحميل -->
-  <p id="loadingText" style="text-align:center; margin-top:20px;">
+  <p id="loadingText" style="text-align:center; margin-top:20px;" data-i18n="orders.loading" aria-live="polite">
     جاري تحميل الطلبات...
   </p>
 
@@ -24,29 +24,31 @@
   <div id="ordersContainer" class="orders-container"></div>
 
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <a href="home.html" class="nav-item">
-      <div class="nav-icon">🏠</div>
-      <div class="nav-label">الرئيسية</div>
+  <nav class="bottom-nav" role="navigation" data-i18n="nav.bottomLabel" data-i18n-attr="aria-label" aria-label="التنقل الرئيسي">
+    <a href="home.html" class="nav-item" data-key="home" data-i18n="nav.home" data-i18n-attr="aria-label,title">
+      <div class="nav-icon" aria-hidden="true">🏠</div>
+      <div class="nav-label" data-i18n="nav.home">الرئيسية</div>
     </a>
 
-    <a href="orders.html" class="nav-item active">
-      <div class="nav-icon">📋</div>
-      <div class="nav-label">طلباتي</div>
+    <a href="orders.html" class="nav-item active" data-key="orders" data-i18n="nav.orders" data-i18n-attr="aria-label,title">
+      <div class="nav-icon" aria-hidden="true">📋</div>
+      <div class="nav-label" data-i18n="nav.orders">طلباتي</div>
     </a>
 
-    <a href="search.html" class="nav-item">
-      <div class="nav-icon">🔎</div>
-      <div class="nav-label">بحث</div>
+    <a href="search.html" class="nav-item" data-key="search" data-i18n="nav.search" data-i18n-attr="aria-label,title">
+      <div class="nav-icon" aria-hidden="true">🔎</div>
+      <div class="nav-label" data-i18n="nav.search">بحث</div>
     </a>
 
-    <a href="profile.html" class="nav-item">
-      <div class="nav-icon">👤</div>
-      <div class="nav-label">حسابي</div>
+    <a href="profile.html" class="nav-item" data-key="profile" data-i18n="nav.profile" data-i18n-attr="aria-label,title">
+      <div class="nav-icon" aria-hidden="true">👤</div>
+      <div class="nav-label" data-i18n="nav.profile">حسابي</div>
     </a>
   </nav>
 
   <!-- Firebase & Scripts -->
+  <script src="./js/app.js"></script>
+  <script type="module" src="./js/i18n.js"></script>
   <script type="module" src="./js/firebase.js"></script>
   <script type="module" src="./js/orders.js"></script>
 <script type="module" src="js/auth-guard.js"></script>

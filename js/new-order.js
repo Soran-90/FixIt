@@ -1,4 +1,5 @@
 import { auth, db } from "./firebase.js";
+import { i18nReady, t } from "./i18n.js";
 import {
   addDoc,
   collection,
@@ -11,22 +12,24 @@ import {
 let userLat = null;
 let userLng = null;
 
+await i18nReady;
+
 document.getElementById("getLocationBtn").addEventListener("click", () => {
   if (!navigator.geolocation) {
-    alert("المتصفح لا يدعم GPS");
+    alert(t("newOrder.noGPS"));
     return;
   }
 
-  document.getElementById("locationStatus").textContent = "⏳ جاري تحديد الموقع...";
+  document.getElementById("locationStatus").textContent = t("newOrder.location.loading");
 
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       userLat = pos.coords.latitude;
       userLng = pos.coords.longitude;
-      document.getElementById("locationStatus").textContent = "✅ تم تحديد الموقع";
+      document.getElementById("locationStatus").textContent = t("newOrder.location.success");
     },
     () => {
-      alert("❌ لم يتم السماح بتحديد الموقع");
+      alert(t("newOrder.location.denied"));
       document.getElementById("locationStatus").textContent = "";
     }
   );
@@ -54,12 +57,12 @@ document.getElementById("submitOrder").addEventListener("click", async () => {
   const time = document.getElementById("time").value;
 
   if (!serviceType || !description || !address || !date || !time) {
-    alert("يرجى ملء جميع الحقول");
+    alert(t("newOrder.validation.missing"));
     return;
   }
 
   if (userLat === null || userLng === null) {
-    alert("يرجى تحديد الموقع");
+    alert(t("newOrder.validation.location"));
     return;
   }
 
@@ -102,10 +105,10 @@ document.getElementById("submitOrder").addEventListener("click", async () => {
       createdAt: serverTimestamp()
     });
 
-    alert("✅ تم إرسال الطلب بنجاح");
+    alert(t("newOrder.success"));
     window.location.href = "orders.html";
   } catch (e) {
-    alert("❌ فشل إرسال الطلب");
+    alert(t("newOrder.failure"));
     console.error(e);
   }
 });
