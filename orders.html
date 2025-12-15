@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>طلباتي - FixIt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- العنوان -->
+  <h2 class="page-title">طلباتي</h2>
+
+  <!-- نص التحميل -->
+  <p id="loadingText" style="text-align:center; margin-top:20px;">
+    جاري تحميل الطلبات...
+  </p>
+
+  <!-- مكان عرض الطلبات -->
+  <div id="ordersContainer" class="orders-container"></div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">الرئيسية</div>
+    </a>
+
+    <a href="orders.html" class="nav-item active">
+      <div class="nav-icon">📋</div>
+      <div class="nav-label">طلباتي</div>
+    </a>
+
+    <a href="search.html" class="nav-item">
+      <div class="nav-icon">🔎</div>
+      <div class="nav-label">بحث</div>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+      <div class="nav-icon">👤</div>
+      <div class="nav-label">حسابي</div>
+    </a>
+  </nav>
+
+  <!-- Firebase & Scripts -->
+  <script type="module" src="./js/firebase.js"></script>
+  <script type="module" src="./js/orders.js"></script>
+<script type="module" src="js/auth-guard.js"></script>
+</body>
+</html>

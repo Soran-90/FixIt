@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>FixIt - الرئيسية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="top-bar">
+  <h2>FixIt</h2>
+
+  <a href="notifications.html" class="notif-icon">
+    🔔
+    <span id="notifBadge" class="notif-badge" style="display:none;">0</span>
+  </a>
+</header>
+
+<h3 class="title">جميع خدمات الصيانة</h3>
+
+<div class="services">
+  <a class="service-card" href="new-order.html?service=كهرباء">كهرباء</a>
+  <a class="service-card" href="new-order.html?service=سباكة">سباكة</a>
+  <a class="service-card" href="new-order.html?service=تكييف">تكييف</a>
+  <a class="service-card" href="new-order.html?service=نجارة">نجارة</a>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="home.html" class="nav-item">
+    <div class="nav-icon">🏠</div>
+    <div class="nav-label">الرئيسية</div>
+  </a>
+  <a href="orders.html" class="nav-item">
+    <div class="nav-icon">📋</div>
+    <div class="nav-label">طلباتي</div>
+  </a>
+  <a href="search.html" class="nav-item">
+    <div class="nav-icon">🔎</div>
+    <div class="nav-label">بحث</div>
+  </a>
+  <a href="profile.html" class="nav-item">
+    <div class="nav-icon">👤</div>
+    <div class="nav-label">حسابي</div>
+  </a>
+</nav>
+
+<script type="module" src="js/auth-guard.js"></script>
+<script type="module" src="js/notifications-badge.js"></script>
+
+</body>
+</html>
