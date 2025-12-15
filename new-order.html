@@ -7,34 +7,137 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="page-bg">
+  <main class="wizard-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">طلب جديد</p>
+        <h1>لنبدأ بحجز الخدمة</h1>
+        <p class="subtle-text">اتبع الخطوات المتتابعة وأكمل المعاينة قبل الإرسال.</p>
+      </div>
+      <span class="draft-status" id="draftStatus">يتم الحفظ تلقائياً</span>
+    </header>
 
-<div class="form-container">
-  <h2>طلب خدمة جديدة</h2>
+    <section class="wizard-card">
+      <div class="wizard-progress" id="wizardProgress">
+        <div class="wizard-step-item active" data-step="0">
+          <span class="step-index">1</span>
+          <span class="step-label">التفاصيل</span>
+        </div>
+        <div class="wizard-step-item" data-step="1">
+          <span class="step-index">2</span>
+          <span class="step-label">الموقع والموعد</span>
+        </div>
+        <div class="wizard-step-item" data-step="2">
+          <span class="step-index">3</span>
+          <span class="step-label">المرفقات</span>
+        </div>
+        <div class="wizard-step-item" data-step="3">
+          <span class="step-index">4</span>
+          <span class="step-label">المعاينة</span>
+        </div>
+      </div>
 
-  <select id="serviceType">
-    <option value="">اختر نوع الخدمة</option>
-    <option value="كهرباء">كهرباء</option>
-    <option value="سباكة">سباكة</option>
-    <option value="تكييف">تكييف</option>
-    <option value="نجارة">نجارة</option>
-  </select>
+      <div class="wizard-content">
+        <div class="wizard-step active" data-step="0">
+          <h3>ما هي الخدمة المطلوبة؟</h3>
+          <label class="input-label" for="serviceType">نوع الخدمة</label>
+          <select id="serviceType">
+            <option value="">اختر نوع الخدمة</option>
+            <option value="كهرباء">كهرباء</option>
+            <option value="سباكة">سباكة</option>
+            <option value="تكييف">تكييف</option>
+            <option value="نجارة">نجارة</option>
+          </select>
 
-  <textarea id="description" placeholder="اشرح العطل بالتفصيل"></textarea>
+          <label class="input-label" for="description">وصف العطل</label>
+          <textarea id="description" placeholder="اشرح العطل بالتفصيل"></textarea>
+        </div>
 
-  <input id="address" type="text" placeholder="العنوان الكامل">
+        <div class="wizard-step" data-step="1">
+          <h3>أين ومتى نصل؟</h3>
+          <label class="input-label" for="address">العنوان</label>
+          <input id="address" type="text" placeholder="العنوان الكامل">
 
-  <button id="getLocationBtn">📍 تحديد موقعي</button>
-  <p id="locationStatus"></p>
+          <div class="location-row">
+            <button id="getLocationBtn" type="button" class="ghost">📍 تحديد موقعي</button>
+            <p id="locationStatus" class="muted">لم يتم تحديد الموقع بعد</p>
+          </div>
 
-  <input id="date" type="date">
-  <input id="time" type="time">
+          <div class="grid two-cols">
+            <div>
+              <label class="input-label" for="date">التاريخ</label>
+              <input id="date" type="date">
+            </div>
+            <div>
+              <label class="input-label" for="time">الوقت</label>
+              <input id="time" type="time">
+            </div>
+          </div>
+        </div>
 
-  <button id="submitOrder">إرسال الطلب</button>
-</div>
+        <div class="wizard-step" data-step="2">
+          <h3>أضف صوراً توضح المشكلة</h3>
+          <p class="subtle-text">يمكنك رفع صور متعددة، سنقوم بضغطها تلقائياً قبل الإرسال.</p>
+          <label class="upload-box" for="photos">
+            <div>
+              <strong>سحب وإفلات</strong>
+              <p class="muted">أو اضغط للاختيار (PNG, JPG)</p>
+            </div>
+          </label>
+          <input id="photos" type="file" accept="image/*" multiple hidden>
+          <div id="photosPreview" class="preview-grid"></div>
+        </div>
 
-<script type="module" src="js/auth-guard.js"></script>
-<script type="module" src="js/new-order.js"></script>
+        <div class="wizard-step" data-step="3">
+          <h3>معاينة الطلب</h3>
+          <div class="preview-card">
+            <div class="preview-row">
+              <span class="muted">نوع الخدمة</span>
+              <strong id="previewService">-</strong>
+            </div>
+            <div class="preview-row">
+              <span class="muted">الوصف</span>
+              <p id="previewDescription">-</p>
+            </div>
+            <div class="preview-row">
+              <span class="muted">العنوان</span>
+              <p id="previewAddress">-</p>
+            </div>
+            <div class="preview-row">
+              <span class="muted">الموقع</span>
+              <p id="previewLocation">لم يتم تحديد الموقع</p>
+            </div>
+            <div class="preview-row two-cols">
+              <div>
+                <span class="muted">التاريخ</span>
+                <p id="previewDate">-</p>
+              </div>
+              <div>
+                <span class="muted">الوقت</span>
+                <p id="previewTime">-</p>
+              </div>
+            </div>
+            <div class="preview-row">
+              <span class="muted">المرفقات</span>
+              <p id="previewPhotos">لا توجد مرفقات</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="wizard-actions">
+        <button type="button" id="backBtn" class="ghost">السابق</button>
+        <div class="actions-right">
+          <span class="muted" id="stepHint">الخطوة 1 من 4</span>
+          <button type="button" id="nextBtn">التالي</button>
+          <button type="button" id="submitOrder" class="primary" hidden>إرسال الطلب</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/auth-guard.js"></script>
+  <script type="module" src="js/new-order.js"></script>
 </body>
 </html>
