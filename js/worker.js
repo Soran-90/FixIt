@@ -127,23 +127,42 @@ async function loadMyOrders(workerId) {
     const div = document.createElement("div");
     div.className = "order-card";
 
-    const positive = o.ratingPositive
-      ? `<p><strong>أسباب الإعجاب:</strong> ${escapeHTML(o.ratingPositive)}</p>`
-      : "";
-    const negative = o.ratingNegative
-      ? `<p><strong>ملاحظات للتحسين:</strong> ${escapeHTML(o.ratingNegative)}</p>`
-      : "";
-    const reply = o.ratingReply
-      ? `<p class="reply-box"><strong>ردك:</strong> ${escapeHTML(o.ratingReply)}</p>`
-      : "";
+      div.innerHTML = `
+        <p><strong>الخدمة:</strong> ${escapeHTML(o.serviceType || "")}</p>
+        <p><strong>العنوان:</strong> ${escapeHTML(o.address || "—")}</p>
+        <p><strong>الحالة:</strong> ${escapeHTML(o.status || "")}</p>
+        ${mapLink ? `<a href="${mapLink}" target="_blank">📍 فتح الموقع</a>` : ""}
+      `;
 
-    div.innerHTML = `
-      <p><strong>الخدمة:</strong> ${o.serviceType}</p>
-      <p><strong>العنوان:</strong> ${o.address || "—"}</p>
-      <p><strong>الحالة:</strong> ${o.status}</p>
-      ${mapLink ? `<a href="${mapLink}" target="_blank">📍 فتح الموقع</a>` : ""}
-      ${o.rated ? `<div class="rating-notes"><p>تقييم العميل: ${"⭐".repeat(o.rating || 0)} (${o.rating || 0}/5)</p>${positive}${negative}${reply}</div>` : ""}
-    `;
+      if (o.rated) {
+        const ratingNotes = document.createElement("div");
+        ratingNotes.className = "rating-notes";
+
+        const ratingLine = document.createElement("p");
+        ratingLine.textContent = `تقييم العميل: ${"⭐".repeat(o.rating || 0)} (${o.rating || 0}/5)`;
+        ratingNotes.appendChild(ratingLine);
+
+        if (o.ratingPositive) {
+          const positiveP = document.createElement("p");
+          positiveP.innerHTML = `<strong>أسباب الإعجاب:</strong> ${escapeHTML(o.ratingPositive)}`;
+          ratingNotes.appendChild(positiveP);
+        }
+
+        if (o.ratingNegative) {
+          const negativeP = document.createElement("p");
+          negativeP.innerHTML = `<strong>ملاحظات للتحسين:</strong> ${escapeHTML(o.ratingNegative)}`;
+          ratingNotes.appendChild(negativeP);
+        }
+
+        if (o.ratingReply) {
+          const replyP = document.createElement("p");
+          replyP.className = "reply-box";
+          replyP.innerHTML = `<strong>ردك:</strong> ${escapeHTML(o.ratingReply)}`;
+          ratingNotes.appendChild(replyP);
+        }
+
+        div.appendChild(ratingNotes);
+      }
 
     if (o.status === "accepted") {
       const btn = document.createElement("button");

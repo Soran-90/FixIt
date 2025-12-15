@@ -56,6 +56,7 @@ async function renderOrders(snapshot) {
 
     let workerInfo = "";
     let ratingUI = "";
+    let ratingNotesNode = null;
 
     // 👷‍♂️ معلومات العامل + متوسط التقييم
     if (order.assignedTo) {
@@ -65,7 +66,7 @@ async function renderOrders(snapshot) {
       if (workerSnap.exists()) {
         const worker = workerSnap.data();
         workerInfo = `
-          <p><strong>العامل:</strong> ${worker.name || worker.email}</p>
+          <p><strong>العامل:</strong> ${escapeHTML(worker.name || worker.email)}</p>
           <p><strong>تقييم العامل:</strong> ⭐ ${worker.ratingAvg || 0}</p>
         `;
       }
@@ -92,33 +93,46 @@ async function renderOrders(snapshot) {
 
     // ⭐ عرض التقييم إذا موجود
     if (order.rated) {
-      const positive = order.ratingPositive
-        ? `<p><strong>أسباب الإعجاب:</strong> ${escapeHTML(order.ratingPositive)}</p>`
-        : "";
-      const negative = order.ratingNegative
-        ? `<p><strong>ملاحظات للتحسين:</strong> ${escapeHTML(order.ratingNegative)}</p>`
-        : "";
-      const reply = order.ratingReply
-        ? `<p class="reply-box"><strong>رد العامل:</strong> ${escapeHTML(order.ratingReply)}</p>`
-        : "";
-      ratingUI = `
-        <div class="rating-notes">
-          <p>تقييمك: ${"⭐".repeat(order.rating)} (${order.rating}/5)</p>
-          ${positive}
-          ${negative}
-          ${reply}
-        </div>
-      `;
+      ratingNotesNode = document.createElement("div");
+      ratingNotesNode.className = "rating-notes";
+
+      const ratingLine = document.createElement("p");
+      ratingLine.textContent = `تقييمك: ${"⭐".repeat(order.rating)} (${order.rating}/5)`;
+      ratingNotesNode.appendChild(ratingLine);
+
+      if (order.ratingPositive) {
+        const positiveP = document.createElement("p");
+        positiveP.innerHTML = `<strong>أسباب الإعجاب:</strong> ${escapeHTML(order.ratingPositive)}`;
+        ratingNotesNode.appendChild(positiveP);
+      }
+
+      if (order.ratingNegative) {
+        const negativeP = document.createElement("p");
+        negativeP.innerHTML = `<strong>ملاحظات للتحسين:</strong> ${escapeHTML(order.ratingNegative)}`;
+        ratingNotesNode.appendChild(negativeP);
+      }
+
+      if (order.ratingReply) {
+        const replyP = document.createElement("p");
+        replyP.className = "reply-box";
+        replyP.innerHTML = `<strong>رد العامل:</strong> ${escapeHTML(order.ratingReply)}`;
+        ratingNotesNode.appendChild(replyP);
+      }
     }
 
     div.innerHTML = `
-      <p><strong>الخدمة:</strong> ${order.serviceType}</p>
-      <p><strong>الوصف:</strong> ${order.description}</p>
+      <p><strong>الخدمة:</strong> ${escapeHTML(order.serviceType || "")}</p>
+      <p><strong>الوصف:</strong> ${escapeHTML(order.description || "")}</p>
       <p><strong>الحالة:</strong> ${translateStatus(order.status)}</p>
       ${workerInfo}
       ${ratingUI}
       <hr>
     `;
+
+    if (ratingNotesNode) {
+      const hr = div.querySelector("hr");
+      div.insertBefore(ratingNotesNode, hr || null);
+    }
 
     // ربط زر إرسال التقييم
     if (order.status === "completed" && !order.rated) {
