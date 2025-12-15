@@ -74,22 +74,35 @@ async function renderOrders(snapshot) {
     // ⭐ واجهة التقييم (إذا مكتمل ولم يُقيّم)
     if (order.status === "completed" && !order.rated) {
       ratingUI = `
-        <label>قيّم العامل:</label>
-        <select id="rating-${orderId}">
-          <option value="">اختر التقييم</option>
-          <option value="1">⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="5">⭐⭐⭐⭐⭐</option>
-        </select>
-        <button data-id="${orderId}">إرسال التقييم</button>
+        <div class="rating-block" data-order="${orderId}">
+          <label>قيّم العامل:</label>
+          <div class="star-row" role="radiogroup" aria-label="اختيار عدد النجوم">
+            <button type="button" class="star-btn" data-val="1" aria-label="نجمة واحدة">★</button>
+            <button type="button" class="star-btn" data-val="2" aria-label="نجمتان">★★</button>
+            <button type="button" class="star-btn" data-val="3" aria-label="ثلاث نجوم">★★★</button>
+            <button type="button" class="star-btn" data-val="4" aria-label="أربع نجوم">★★★★</button>
+            <button type="button" class="star-btn" data-val="5" aria-label="خمس نجوم">★★★★★</button>
+          </div>
+          <input type="text" id="rating-good-${orderId}" placeholder="ما الذي أعجبك؟ (قصير)" maxlength="120">
+          <input type="text" id="rating-bad-${orderId}" placeholder="ما الذي يمكن تحسينه؟ (قصير)" maxlength="120">
+          <button data-id="${orderId}" class="submit-rating">إرسال التقييم</button>
+        </div>
       `;
     }
 
     // ⭐ عرض التقييم إذا موجود
     if (order.rated) {
-      ratingUI = `<p>تقييمك: ${"⭐".repeat(order.rating)}</p>`;
+      const positive = order.ratingPositive ? `<p><strong>أسباب الإعجاب:</strong> ${order.ratingPositive}</p>` : "";
+      const negative = order.ratingNegative ? `<p><strong>ملاحظات للتحسين:</strong> ${order.ratingNegative}</p>` : "";
+      const reply = order.ratingReply ? `<p class="reply-box"><strong>رد العامل:</strong> ${order.ratingReply}</p>` : "";
+      ratingUI = `
+        <div class="rating-notes">
+          <p>تقييمك: ${"⭐".repeat(order.rating)} (${order.rating}/5)</p>
+          ${positive}
+          ${negative}
+          ${reply}
+        </div>
+      `;
     }
 
     div.innerHTML = `
@@ -103,13 +116,27 @@ async function renderOrders(snapshot) {
 
     // ربط زر إرسال التقييم
     if (order.status === "completed" && !order.rated) {
-      div.querySelector("button").addEventListener("click", async () => {
-        const ratingValue = div.querySelector(`#rating-${orderId}`).value;
-        if (!ratingValue) {
-          alert("يرجى اختيار التقييم");
+      const ratingBlock = div.querySelector(".rating-block");
+      const starButtons = ratingBlock.querySelectorAll(".star-btn");
+      let selectedRating = 0;
+
+      starButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectedRating = Number(btn.dataset.val);
+          starButtons.forEach((b) => b.classList.toggle("selected", Number(b.dataset.val) <= selectedRating));
+        });
+      });
+
+      div.querySelector(".submit-rating").addEventListener("click", async () => {
+        const positive = ratingBlock.querySelector(`#rating-good-${orderId}`).value.trim();
+        const negative = ratingBlock.querySelector(`#rating-bad-${orderId}`).value.trim();
+
+        if (!selectedRating) {
+          alert("يرجى اختيار عدد النجوم");
           return;
         }
-        await submitRating(orderId, Number(ratingValue));
+
+        await submitRating(orderId, selectedRating, { positive, negative });
       });
     }
 
@@ -119,7 +146,7 @@ async function renderOrders(snapshot) {
   orderViews.forEach((view) => container.appendChild(view));
 }
 
-async function submitRating(orderId, rating) {
+async function submitRating(orderId, rating, reasons = {}) {
   try {
     // جلب الطلب
     const orderRef = doc(db, "orders", orderId);
@@ -132,7 +159,9 @@ async function submitRating(orderId, rating) {
     // 1️⃣ حفظ التقييم في الطلب
     await updateDoc(orderRef, {
       rating: rating,
-      rated: true
+      rated: true,
+      ratingPositive: reasons.positive || null,
+      ratingNegative: reasons.negative || null
     });
 
     // 2️⃣ تحديث إحصائيات العامل

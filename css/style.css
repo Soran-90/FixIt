@@ -25,6 +25,17 @@ input {
     border: 1px solid #bbb;
 }
 
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+}
+
 button {
     width: 100%;
     padding: 12px;
@@ -175,6 +186,51 @@ button {
   margin: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.rating-block {
+  background: #f5f8ff;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.star-row {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.star-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  background: #fff;
+  color: #ffb400;
+  font-size: 16px;
+}
+
+.star-btn.selected {
+  background: #ffeecd;
+  border-color: #ffb400;
+  font-weight: bold;
+}
+
+.rating-notes p {
+  margin: 4px 0;
+}
+
+.rating-summary {
+  background: #fffaf2;
+  border: 1px solid #ffe1b3;
+}
+
+.reply-box {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f6f6f6;
+  border-radius: 10px;
 }
 
 .status.pending {
