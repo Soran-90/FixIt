@@ -127,9 +127,15 @@ async function loadMyOrders(workerId) {
     const div = document.createElement("div");
     div.className = "order-card";
 
-    const positive = o.ratingPositive ? `<p><strong>أسباب الإعجاب:</strong> ${o.ratingPositive}</p>` : "";
-    const negative = o.ratingNegative ? `<p><strong>ملاحظات للتحسين:</strong> ${o.ratingNegative}</p>` : "";
-    const reply = o.ratingReply ? `<p class="reply-box"><strong>ردك:</strong> ${o.ratingReply}</p>` : "";
+    const positive = o.ratingPositive
+      ? `<p><strong>أسباب الإعجاب:</strong> ${escapeHTML(o.ratingPositive)}</p>`
+      : "";
+    const negative = o.ratingNegative
+      ? `<p><strong>ملاحظات للتحسين:</strong> ${escapeHTML(o.ratingNegative)}</p>`
+      : "";
+    const reply = o.ratingReply
+      ? `<p class="reply-box"><strong>ردك:</strong> ${escapeHTML(o.ratingReply)}</p>`
+      : "";
 
     div.innerHTML = `
       <p><strong>الخدمة:</strong> ${o.serviceType}</p>
@@ -226,4 +232,13 @@ function updateRatingSummary(orders) {
     .map(([w, c]) => `${w} (${c})`);
 
   wordsEl.textContent = topWords.length ? topWords.join(", ") : "لا توجد كلمات متكررة بعد";
+}
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
