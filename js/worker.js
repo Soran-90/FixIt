@@ -74,22 +74,33 @@ async function loadNewOrders(workerId) {
       <button>قبول الطلب</button>
     `;
 
-    div.querySelector("button").onclick = async () => {
-      await updateDoc(doc(db, "orders", orderSnap.id), {
-        status: "accepted",
-        assignedTo: workerId
-      });
+    const acceptBtn = div.querySelector("button");
+    acceptBtn.onclick = async () => {
+      acceptBtn.disabled = true;
+      acceptBtn.textContent = "جاري القبول...";
 
-      // إشعار للزبون
-      await addDoc(collection(db, "notifications"), {
-        userId: o.userId,
-        message: "🧑‍🔧 تم قبول طلبك من قبل العامل",
-        read: false,
-        createdAt: serverTimestamp()
-      });
+      try {
+        await updateDoc(doc(db, "orders", orderSnap.id), {
+          status: "accepted",
+          assignedTo: workerId
+        });
 
-      loadNewOrders(workerId);
-      loadMyOrders(workerId);
+        // إشعار للزبون
+        await addDoc(collection(db, "notifications"), {
+          userId: o.userId,
+          message: "🧑‍🔧 تم قبول طلبك من قبل العامل",
+          read: false,
+          createdAt: serverTimestamp()
+        });
+
+        loadNewOrders(workerId);
+        loadMyOrders(workerId);
+      } catch (err) {
+        console.error(err);
+        alert("حدث خطأ أثناء قبول الطلب. يرجى المحاولة مرة أخرى.");
+        acceptBtn.disabled = false;
+        acceptBtn.textContent = "قبول الطلب";
+      }
     };
 
     pendingContainer.appendChild(div);
