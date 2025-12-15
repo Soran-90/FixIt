@@ -25,7 +25,6 @@ async function loadDashboard() {
     const res = await fetch(API_URL);
     dashboardData = await res.json();
     setPeriod(currentPeriod);
-    attachEvents();
   } catch (error) {
     console.error('فشل تحميل البيانات', error);
     resultsContainer.innerHTML = '<p>تعذر تحميل البيانات حالياً.</p>';
@@ -135,6 +134,11 @@ function renderCharts(frame) {
 }
 
 function renderSearch() {
+  if (!dashboardData?.timeframes?.[currentPeriod]) {
+    resultsContainer.innerHTML = '<p>البيانات غير متاحة حالياً.</p>';
+    return;
+  }
+
   const query = searchInput.value.trim().toLowerCase();
   const orders = dashboardData.timeframes[currentPeriod].orders || [];
 
@@ -176,4 +180,5 @@ function renderUpdatedAt() {
   }
 }
 
+attachEvents();
 loadDashboard();
