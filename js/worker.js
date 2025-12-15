@@ -13,6 +13,9 @@ import {
 
 const pendingContainer = document.getElementById("pendingOrders");
 const myContainer = document.getElementById("myOrders");
+const avgEl = document.getElementById("ratingAvg");
+const countEl = document.getElementById("ratingCount");
+const wordsEl = document.getElementById("topWords");
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
@@ -102,14 +105,21 @@ async function loadMyOrders(workerId) {
 
   if (snap.empty) {
     myContainer.innerHTML = "لا توجد طلبات لديك";
+    updateRatingSummary([]);
     return;
   }
 
   myContainer.innerHTML = "";
 
-  snap.forEach((orderSnap) => {
-    const o = orderSnap.data();
+  const orders = [];
 
+  snap.forEach((orderSnap) => {
+    orders.push({ id: orderSnap.id, ...orderSnap.data() });
+  });
+
+  updateRatingSummary(orders);
+
+  orders.forEach((o) => {
     const mapLink = o.location
       ? `https://www.google.com/maps?q=${o.location.lat},${o.location.lng}`
       : null;
@@ -117,18 +127,23 @@ async function loadMyOrders(workerId) {
     const div = document.createElement("div");
     div.className = "order-card";
 
+    const positive = o.ratingPositive ? `<p><strong>أسباب الإعجاب:</strong> ${o.ratingPositive}</p>` : "";
+    const negative = o.ratingNegative ? `<p><strong>ملاحظات للتحسين:</strong> ${o.ratingNegative}</p>` : "";
+    const reply = o.ratingReply ? `<p class="reply-box"><strong>ردك:</strong> ${o.ratingReply}</p>` : "";
+
     div.innerHTML = `
       <p><strong>الخدمة:</strong> ${o.serviceType}</p>
       <p><strong>العنوان:</strong> ${o.address || "—"}</p>
       <p><strong>الحالة:</strong> ${o.status}</p>
       ${mapLink ? `<a href="${mapLink}" target="_blank">📍 فتح الموقع</a>` : ""}
+      ${o.rated ? `<div class="rating-notes"><p>تقييم العميل: ${"⭐".repeat(o.rating || 0)} (${o.rating || 0}/5)</p>${positive}${negative}${reply}</div>` : ""}
     `;
 
     if (o.status === "accepted") {
       const btn = document.createElement("button");
       btn.textContent = "إنهاء الطلب";
       btn.onclick = async () => {
-        await updateDoc(doc(db, "orders", orderSnap.id), {
+        await updateDoc(doc(db, "orders", o.id), {
           status: "completed",
           completedAt: serverTimestamp()
         });
@@ -145,6 +160,70 @@ async function loadMyOrders(workerId) {
       div.appendChild(btn);
     }
 
+    if (o.rated && !o.ratingReply) {
+      const replyBox = document.createElement("div");
+      replyBox.className = "reply-box";
+      replyBox.innerHTML = `
+        <p style="margin-top:0;"><strong>رد على العميل:</strong></p>
+        <textarea maxlength="200" placeholder="أجب باحترام ووضوح"></textarea>
+        <button>حفظ الرد</button>
+      `;
+
+      const replyBtn = replyBox.querySelector("button");
+      replyBtn.onclick = async () => {
+        const replyText = replyBox.querySelector("textarea").value.trim();
+        if (!replyText) {
+          alert("يرجى كتابة رد قصير");
+          return;
+        }
+
+        replyBtn.disabled = true;
+        await updateDoc(doc(db, "orders", o.id), {
+          ratingReply: replyText,
+          ratingReplyAt: serverTimestamp(),
+          ratingReplyBy: workerId
+        });
+        loadMyOrders(workerId);
+      };
+      div.appendChild(replyBox);
+    }
+
     myContainer.appendChild(div);
   });
+}
+
+function updateRatingSummary(orders) {
+  if (!avgEl || !countEl || !wordsEl) return;
+
+  const ratedOrders = orders.filter((o) => o.rated && o.rating);
+  if (ratedOrders.length === 0) {
+    avgEl.textContent = "—";
+    countEl.textContent = "لا تقييمات بعد";
+    wordsEl.textContent = "—";
+    return;
+  }
+
+  const total = ratedOrders.reduce((sum, o) => sum + (o.rating || 0), 0);
+  const avg = (total / ratedOrders.length).toFixed(2);
+  avgEl.textContent = `${avg} / 5`;
+  countEl.textContent = `${ratedOrders.length} تقييم`;
+
+  const wordCounts = {};
+  ratedOrders.forEach((o) => {
+    [o.ratingPositive, o.ratingNegative].forEach((txt) => {
+      if (!txt) return;
+      txt.split(/\s+/).forEach((word) => {
+        const clean = word.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase();
+        if (clean.length < 3) return;
+        wordCounts[clean] = (wordCounts[clean] || 0) + 1;
+      });
+    });
+  });
+
+  const topWords = Object.entries(wordCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([w, c]) => `${w} (${c})`);
+
+  wordsEl.textContent = topWords.length ? topWords.join(", ") : "لا توجد كلمات متكررة بعد";
 }
