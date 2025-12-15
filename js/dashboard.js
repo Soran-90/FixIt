@@ -1,10 +1,13 @@
 import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@2.30.0/esm/index.js';
+import { auth } from './firebase.js';
+import { signOut } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 
 const API_URL = '../api/dashboard-summary.json';
 const periodButtons = document.querySelectorAll('.filter-button');
 const searchInput = document.getElementById('searchInput');
 const resultsContainer = document.getElementById('resultsContainer');
 const updatedAtEl = document.getElementById('updatedAt');
+const logoutButton = document.getElementById('logoutButton');
 
 const statTotal = document.getElementById('stat-total');
 const statDone = document.getElementById('stat-done');
@@ -35,6 +38,18 @@ function attachEvents() {
   });
 
   searchInput.addEventListener('input', () => renderSearch());
+
+  logoutButton?.addEventListener('click', handleLogout);
+}
+
+async function handleLogout() {
+  try {
+    await signOut(auth);
+    window.location.replace('login.html');
+  } catch (error) {
+    alert('تعذر تسجيل الخروج، حاول مرة أخرى');
+    console.error('Logout failed', error);
+  }
 }
 
 function setPeriod(period) {
