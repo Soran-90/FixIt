@@ -13,6 +13,7 @@ import {
 
 const container = document.getElementById("ordersContainer");
 const liveBanner = document.getElementById("ordersLiveBanner");
+const loadingText = document.getElementById("loadingText");
 let unsubscribeOrders = null;
 
 onAuthStateChanged(auth, async (user) => {
@@ -22,6 +23,7 @@ onAuthStateChanged(auth, async (user) => {
 
 function subscribeToOrders(userId) {
   container.innerHTML = "⏳ جاري تحميل طلباتك...";
+  if (loadingText) loadingText.style.display = "block";
   const q = query(collection(db, "orders"), where("userId", "==", userId));
 
   if (unsubscribeOrders) unsubscribeOrders();
@@ -29,12 +31,14 @@ function subscribeToOrders(userId) {
   let initialized = false;
   unsubscribeOrders = onSnapshot(q, async (snapshot) => {
     await renderOrders(snapshot);
+    if (loadingText) loadingText.style.display = "none";
     if (initialized) {
       showBanner("🔔 تم تحديث حالة طلباتك لحظيًا");
     }
     initialized = true;
   }, (err) => {
     container.innerHTML = "❌ تعذر تحميل الطلبات الآن";
+    if (loadingText) loadingText.style.display = "none";
     console.error("realtime orders error", err);
   });
 }
@@ -214,6 +218,7 @@ async function submitRating(orderId, rating, reasons = {}) {
 function translateStatus(status) {
   switch (status) {
     case "pending": return "قيد الانتظار";
+    case "assigned": return "تم تعيين عامل";
     case "accepted": return "تم قبول الطلب";
     case "completed": return "مكتمل";
     default: return status;
