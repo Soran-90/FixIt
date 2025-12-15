@@ -13,7 +13,7 @@ const statResponse = document.getElementById('stat-response');
 const statTrend = document.getElementById('stat-trend');
 
 let dashboardData = null;
-let currentPeriod = 'weekly';
+let currentPeriod = 'daily';
 let trendChart;
 let servicesChart;
 
@@ -55,7 +55,7 @@ function setPeriod(period) {
 function renderStats(stats) {
   statTotal.textContent = stats.totalOrders;
   statDone.textContent = stats.completedOrders;
-  statRevenue.textContent = `${stats.revenue.toLocaleString()} ريال`;
+  statRevenue.textContent = `${stats.revenue.toLocaleString()} دينار عراقي`;
   statResponse.textContent = stats.avgResponse.toFixed(1);
   statTrend.textContent = `${stats.trend > 0 ? '⬆︎' : '⬇︎'} ${Math.abs(stats.trend)}%`;
 }
@@ -138,7 +138,7 @@ function renderSearch() {
       <div><strong>${order.id}</strong><div class="chart-caption">${order.customer}</div></div>
       <div>${order.service}</div>
       <div class="hide-mobile"><span class="badge ${badgeClass(order.status)}">${order.status}</span></div>
-      <div class="hide-mobile">${order.total.toLocaleString()} ر.س</div>
+      <div class="hide-mobile">${order.total.toLocaleString()} د.ع</div>
     </div>
   `).join('');
 
