@@ -30,6 +30,13 @@ body.dashboard {
   margin-bottom: 18px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .dashboard-title {
   margin: 0;
   font-size: 28px;
@@ -64,6 +71,24 @@ body.dashboard {
   color: #fff;
   border-color: var(--brand);
   box-shadow: 0 8px 16px rgba(13,110,253,0.12);
+}
+
+.logout-button {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff6f6;
+  color: #dc3545;
+  cursor: pointer;
+  min-width: 120px;
+  transition: all 0.15s ease;
+}
+
+.logout-button:hover {
+  background: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+  box-shadow: 0 8px 16px rgba(220,53,69,0.12);
 }
 
 .search-box {
