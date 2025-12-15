@@ -4,30 +4,42 @@ import {
   collection,
   query,
   where,
-  getDocs,
-  doc,
   getDoc,
   updateDoc,
-  increment
+  increment,
+  onSnapshot,
+  doc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const container = document.getElementById("ordersContainer");
+const liveBanner = document.getElementById("ordersLiveBanner");
+let unsubscribeOrders = null;
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
-  loadMyOrders(user.uid);
+  subscribeToOrders(user.uid);
 });
 
-async function loadMyOrders(userId) {
+function subscribeToOrders(userId) {
   container.innerHTML = "⏳ جاري تحميل طلباتك...";
+  const q = query(collection(db, "orders"), where("userId", "==", userId));
 
-  const q = query(
-    collection(db, "orders"),
-    where("userId", "==", userId)
-  );
+  if (unsubscribeOrders) unsubscribeOrders();
 
-  const snapshot = await getDocs(q);
+  let initialized = false;
+  unsubscribeOrders = onSnapshot(q, async (snapshot) => {
+    await renderOrders(snapshot);
+    if (initialized) {
+      showBanner("🔔 تم تحديث حالة طلباتك لحظيًا");
+    }
+    initialized = true;
+  }, (err) => {
+    container.innerHTML = "❌ تعذر تحميل الطلبات الآن";
+    console.error("realtime orders error", err);
+  });
+}
 
+async function renderOrders(snapshot) {
   if (snapshot.empty) {
     container.innerHTML = "لا توجد طلبات";
     return;
@@ -35,7 +47,7 @@ async function loadMyOrders(userId) {
 
   container.innerHTML = "";
 
-  for (const orderSnap of snapshot.docs) {
+  const orderViews = await Promise.all(snapshot.docs.map(async (orderSnap) => {
     const order = orderSnap.data();
     const orderId = orderSnap.id;
 
@@ -101,8 +113,10 @@ async function loadMyOrders(userId) {
       });
     }
 
-    container.appendChild(div);
-  }
+    return div;
+  }));
+
+  orderViews.forEach((view) => container.appendChild(view));
 }
 
 async function submitRating(orderId, rating) {
@@ -155,4 +169,13 @@ function translateStatus(status) {
     case "completed": return "مكتمل";
     default: return status;
   }
+}
+
+function showBanner(message) {
+  if (!liveBanner) return;
+  liveBanner.textContent = message;
+  liveBanner.style.display = "block";
+  setTimeout(() => {
+    liveBanner.style.display = "none";
+  }, 4000);
 }

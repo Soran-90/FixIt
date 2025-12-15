@@ -17,6 +17,23 @@
         <p>طرق الدفع: عند الاستلام</p>
     </div>
 
+    <section aria-label="notification settings" style="margin-top:20px;">
+      <h3 class="title">إعدادات الإشعارات</h3>
+      <div class="switch-field">
+        <label for="notif-order">تحديثات حالة الطلب</label>
+        <input type="checkbox" id="notif-order" checked>
+      </div>
+      <div class="switch-field">
+        <div>
+          <label for="notif-general">إشعارات عامة</label>
+          <small>عروض، نصائح، وأخبار FixIt</small>
+        </div>
+        <input type="checkbox" id="notif-general" checked>
+      </div>
+      <button id="saveNotifPrefs" style="width:100%; margin-top:12px;">حفظ التفضيلات</button>
+      <p id="notifPrefsStatus" aria-live="polite"></p>
+    </section>
+
     <script src="js/app.js"></script>
     <!-- START Bottom Navigation -->
 <nav class="bottom-nav">
@@ -45,6 +62,7 @@
 
 <!-- END Bottom Navigation -->
  <script type="module" src="js/firebase.js"></script>
-<script type="module" src="js/auth-guard.js"></script>
+ <script type="module" src="js/auth-guard.js"></script>
+ <script type="module" src="js/profile.js"></script>
 </body>
 </html>
