@@ -2,32 +2,83 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة تحكم الإدارة</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
 </head>
+<body class="dashboard">
+  <div class="dashboard-wrapper">
+    <header class="dashboard-header">
+      <div>
+        <h1 class="dashboard-title">لوحة التحكم</h1>
+        <p class="dashboard-subtitle">مؤشرات لحظية لأداء الطلبات والخدمات</p>
+      </div>
+      <div class="filters">
+        <button class="filter-button active" data-period="daily">يومي</button>
+        <button class="filter-button" data-period="weekly">أسبوعي</button>
+        <button class="filter-button" data-period="monthly">شهري</button>
+      </div>
+    </header>
 
-<body>
+    <div class="search-box" aria-label="بحث في الطلبات">
+      <span class="icon">🔍</span>
+      <input type="search" id="searchInput" placeholder="ابحث برقم الطلب، اسم العميل أو نوع الخدمة">
+    </div>
 
-<div class="container">
-  <h1>لوحة تحكم الإدارة</h1>
+    <section class="stats-grid" aria-label="بطاقات الملخص">
+      <article class="stat-card">
+        <div class="stat-label">إجمالي الطلبات</div>
+        <p class="stat-value" id="stat-total">--</p>
+        <div class="stat-trend" id="stat-trend">⬆︎ 0%</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">الطلبات المنجزة</div>
+        <p class="stat-value" id="stat-done">--</p>
+        <div class="badge success">جاهز للتسليم</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">إيرادات مقدرة</div>
+        <p class="stat-value" id="stat-revenue">--</p>
+        <div class="badge info">ريال</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">متوسط الاستجابة (ساعات)</div>
+        <p class="stat-value" id="stat-response">--</p>
+        <div class="badge warning">سريع</div>
+      </article>
+    </section>
 
-  <button onclick="location.href='admin-orders.html'">📋 إدارة الطلبات</button>
-  <button onclick="location.href='admin-users.html'">👤 إدارة المستخدمين</button>
-  <button id="logoutBtn">🚪 تسجيل الخروج</button>
-</div>
+    <section class="charts-grid" aria-label="رسوم بيانية">
+      <article class="chart-card">
+        <div class="chart-header">
+          <h2 class="chart-title">توزيع الطلبات حسب الوقت</h2>
+          <p class="chart-caption">متغير مع الفترة الزمنية المختارة</p>
+        </div>
+        <canvas id="trendChart" height="160"></canvas>
+      </article>
+      <article class="chart-card">
+        <div class="chart-header">
+          <h2 class="chart-title">الخدمات الأكثر طلباً</h2>
+          <p class="chart-caption">أعلى 5 فئات</p>
+        </div>
+        <canvas id="servicesChart" height="160"></canvas>
+      </article>
+    </section>
 
-<script type="module" src="../js/admin-guard.js"></script>
+    <section class="results-card" aria-label="نتائج البحث">
+      <div class="chart-header">
+        <h2 class="chart-title">الطلبات المطابقة للبحث</h2>
+        <p class="chart-caption">تحديث فوري بحسب النص المدخل</p>
+      </div>
+      <div id="resultsContainer"></div>
+      <div class="updated-at" id="updatedAt">آخر تحديث: --</div>
+    </section>
+  </div>
 
-<script type="module">
-  import { auth } from "../js/firebase.js";
-  import { signOut } from
-  "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-  document.getElementById("logoutBtn").onclick = async () => {
-    await signOut(auth);
-    window.location.replace("login.html");
-  };
-</script>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script type="module" src="../js/admin-guard.js"></script>
+  <script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>

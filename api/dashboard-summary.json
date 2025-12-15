@@ -1,0 +1,87 @@
+{
+  "updatedAt": "2024-07-01T09:30:00Z",
+  "timeframes": {
+    "daily": {
+      "stats": {
+        "totalOrders": 18,
+        "completedOrders": 12,
+        "revenue": 2360,
+        "avgResponse": 2.8,
+        "trend": 12
+      },
+      "trend": [
+        { "label": "صباح", "value": 7 },
+        { "label": "ظهيرة", "value": 5 },
+        { "label": "مساء", "value": 6 }
+      ],
+      "services": [
+        { "label": "سباكة", "value": 5 },
+        { "label": "كهرباء", "value": 6 },
+        { "label": "تكييف", "value": 4 },
+        { "label": "نجارة", "value": 3 }
+      ],
+      "orders": [
+        { "id": "ORD-1851", "customer": "عبدالله", "service": "كهرباء", "status": "مكتمل", "total": 320, "date": "2024-07-01" },
+        { "id": "ORD-1850", "customer": "هند", "service": "سباكة", "status": "قيد التنفيذ", "total": 210, "date": "2024-07-01" },
+        { "id": "ORD-1846", "customer": "سارة", "service": "تكييف", "status": "مكتمل", "total": 480, "date": "2024-07-01" }
+      ]
+    },
+    "weekly": {
+      "stats": {
+        "totalOrders": 126,
+        "completedOrders": 102,
+        "revenue": 14280,
+        "avgResponse": 3.4,
+        "trend": 18
+      },
+      "trend": [
+        { "label": "السبت", "value": 22 },
+        { "label": "الأحد", "value": 18 },
+        { "label": "الإثنين", "value": 16 },
+        { "label": "الثلاثاء", "value": 19 },
+        { "label": "الأربعاء", "value": 21 },
+        { "label": "الخميس", "value": 17 },
+        { "label": "الجمعة", "value": 13 }
+      ],
+      "services": [
+        { "label": "سباكة", "value": 32 },
+        { "label": "كهرباء", "value": 28 },
+        { "label": "تكييف", "value": 24 },
+        { "label": "نجارة", "value": 17 },
+        { "label": "تنظيف", "value": 25 }
+      ],
+      "orders": [
+        { "id": "ORD-1839", "customer": "خالد", "service": "كهرباء", "status": "مكتمل", "total": 560, "date": "2024-06-30" },
+        { "id": "ORD-1827", "customer": "محمد", "service": "تنظيف", "status": "مكتمل", "total": 350, "date": "2024-06-28" },
+        { "id": "ORD-1818", "customer": "نورة", "service": "نجارة", "status": "قيد التنفيذ", "total": 620, "date": "2024-06-26" }
+      ]
+    },
+    "monthly": {
+      "stats": {
+        "totalOrders": 502,
+        "completedOrders": 431,
+        "revenue": 58420,
+        "avgResponse": 3.9,
+        "trend": 24
+      },
+      "trend": [
+        { "label": "الأسبوع 1", "value": 118 },
+        { "label": "الأسبوع 2", "value": 126 },
+        { "label": "الأسبوع 3", "value": 112 },
+        { "label": "الأسبوع 4", "value": 146 }
+      ],
+      "services": [
+        { "label": "سباكة", "value": 120 },
+        { "label": "كهرباء", "value": 104 },
+        { "label": "تكييف", "value": 96 },
+        { "label": "نجارة", "value": 76 },
+        { "label": "تنظيف", "value": 106 }
+      ],
+      "orders": [
+        { "id": "ORD-1765", "customer": "أميرة", "service": "سباكة", "status": "مكتمل", "total": 420, "date": "2024-06-12" },
+        { "id": "ORD-1723", "customer": "زياد", "service": "كهرباء", "status": "مكتمل", "total": 710, "date": "2024-06-05" },
+        { "id": "ORD-1699", "customer": "رنا", "service": "تكييف", "status": "ملغي", "total": 0, "date": "2024-06-01" }
+      ]
+    }
+  }
+}
