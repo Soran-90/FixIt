@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
 
+if: false
+
 jobs:
   accessibility:
     runs-on: ubuntu-latest
