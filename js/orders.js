@@ -92,9 +92,15 @@ async function renderOrders(snapshot) {
 
     // ⭐ عرض التقييم إذا موجود
     if (order.rated) {
-      const positive = order.ratingPositive ? `<p><strong>أسباب الإعجاب:</strong> ${order.ratingPositive}</p>` : "";
-      const negative = order.ratingNegative ? `<p><strong>ملاحظات للتحسين:</strong> ${order.ratingNegative}</p>` : "";
-      const reply = order.ratingReply ? `<p class="reply-box"><strong>رد العامل:</strong> ${order.ratingReply}</p>` : "";
+      const positive = order.ratingPositive
+        ? `<p><strong>أسباب الإعجاب:</strong> ${escapeHTML(order.ratingPositive)}</p>`
+        : "";
+      const negative = order.ratingNegative
+        ? `<p><strong>ملاحظات للتحسين:</strong> ${escapeHTML(order.ratingNegative)}</p>`
+        : "";
+      const reply = order.ratingReply
+        ? `<p class="reply-box"><strong>رد العامل:</strong> ${escapeHTML(order.ratingReply)}</p>`
+        : "";
       ratingUI = `
         <div class="rating-notes">
           <p>تقييمك: ${"⭐".repeat(order.rating)} (${order.rating}/5)</p>
@@ -207,4 +213,13 @@ function showBanner(message) {
   setTimeout(() => {
     liveBanner.style.display = "none";
   }, 4000);
+}
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
