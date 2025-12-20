@@ -4,52 +4,92 @@
   <meta charset="UTF-8">
   <title>FixIt - الرئيسية</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+
+  <!-- CSS خاص بالزبون -->
+  <link rel="stylesheet" href="css/customer/customer.css">
 </head>
 
-<body>
+<body class="customer-page">
 
-<header class="top-bar">
-  <h2>FixIt</h2>
+  <!-- ===== Top Bar ===== -->
+  <header class="top-bar">
+    <div class="brand">
+      <h2>FixIt</h2>
+      <p class="subtitle">خدمات صيانة موثوقة وسريعة</p>
+    </div>
 
-  <a href="notifications.html" class="notif-icon">
-    🔔
-    <span id="notifBadge" class="notif-badge" style="display:none;">0</span>
-  </a>
-  <div id="notifToast" class="notif-toast" aria-live="polite"></div>
-</header>
+    <a href="notifications.html" class="notif-icon" aria-label="الإشعارات">
+      🔔
+      <span id="notifBadge" class="notif-badge" style="display:none;">0</span>
+    </a>
 
-<h3 class="title">جميع خدمات الصيانة</h3>
+    <div id="notifToast" class="notif-toast" aria-live="polite"></div>
+  </header>
 
-<div class="services">
-  <a class="service-card" href="new-order.html?service=كهرباء">كهرباء</a>
-  <a class="service-card" href="new-order.html?service=سباكة">سباكة</a>
-  <a class="service-card" href="new-order.html?service=تكييف">تكييف</a>
-  <a class="service-card" href="new-order.html?service=نجارة">نجارة</a>
-</div>
+  <!-- ===== Section Title ===== -->
+  <section class="section-header">
+    <h3>اختر الخدمة التي تحتاجها</h3>
+    <p>نصل إليك أينما كنت وبأسرع وقت</p>
+  </section>
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="home.html" class="nav-item">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-label">الرئيسية</div>
-  </a>
-  <a href="orders.html" class="nav-item">
-    <div class="nav-icon">📋</div>
-    <div class="nav-label">طلباتي</div>
-  </a>
-  <a href="search.html" class="nav-item">
-    <div class="nav-icon">🔎</div>
-    <div class="nav-label">بحث</div>
-  </a>
-  <a href="profile.html" class="nav-item">
-    <div class="nav-icon">👤</div>
-    <div class="nav-label">حسابي</div>
-  </a>
-</nav>
+  <!-- ===== Services Grid ===== -->
+  <section class="services-grid">
 
-<script type="module" src="js/auth-guard.js"></script>
-<script type="module" src="js/notifications-badge.js"></script>
+    <a class="service-card" href="new-order.html?service=كهرباء">
+      <div class="service-icon">⚡</div>
+      <div class="service-title">كهرباء</div>
+      <div class="service-desc">أعطال، تمديدات، صيانة</div>
+    </a>
+
+    <a class="service-card" href="new-order.html?service=سباكة">
+      <div class="service-icon">🚰</div>
+      <div class="service-title">سباكة</div>
+      <div class="service-desc">تسريب، انسداد، تصليح</div>
+    </a>
+
+    <a class="service-card" href="new-order.html?service=تكييف">
+      <div class="service-icon">❄️</div>
+      <div class="service-title">تكييف</div>
+      <div class="service-desc">تنصيب وصيانة المكيفات</div>
+    </a>
+
+    <a class="service-card" href="new-order.html?service=نجارة">
+      <div class="service-icon">🪚</div>
+      <div class="service-title">نجارة</div>
+      <div class="service-desc">أبواب، أثاث، تصليح</div>
+    </a>
+
+  </section>
+
+  <!-- ===== Bottom Navigation ===== -->
+  <nav class="bottom-nav">
+
+    <a href="home.html" class="nav-item active">
+      <span class="icon">🏠</span>
+      <small>الرئيسية</small>
+    </a>
+
+    <a href="orders.html" class="nav-item">
+      <span class="icon">📋</span>
+      <small>طلباتي</small>
+    </a>
+
+    <a href="search.html" class="nav-item">
+      <span class="icon">🔍</span>
+      <small>بحث</small>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+      <span class="icon">👤</span>
+      <small>حسابي</small>
+    </a>
+
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="js/auth-guard.js"></script>
+  <script type="module" src="js/notifications-badge.js"></script>
+  <script src="js/bottom-nav-anim.js"></script>
 
 </body>
 </html>

@@ -4,51 +4,65 @@
   <meta charset="UTF-8">
   <title>طلباتي - FixIt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+
+  <!-- CSS خاص بالزبون -->
+  <link rel="stylesheet" href="css/customer/customer.css">
 </head>
-<body>
 
-  <!-- العنوان -->
-  <h2 class="page-title">طلباتي</h2>
+<body class="customer-page">
 
+  <!-- ===== Top Header ===== -->
+  <header class="page-header">
+    <h2>📋 طلباتي</h2>
+    <p class="subtitle">تابع حالة طلباتك أولاً بأول</p>
+  </header>
+
+  <!-- ===== Live Banner ===== -->
   <div id="ordersLiveBanner" class="info-banner" style="display:none;">
     🔄 يتم تحديث حالة الطلبات مباشرةً...
   </div>
 
-  <!-- نص التحميل -->
-  <p id="loadingText" style="text-align:center; margin-top:20px;">
-    جاري تحميل الطلبات...
-  </p>
+  <!-- ===== Loading State ===== -->
+  <div id="loadingText" class="loading-state">
+    <div class="loader"></div>
+    <p>جاري تحميل الطلبات...</p>
+  </div>
 
-  <!-- مكان عرض الطلبات -->
-  <div id="ordersContainer" class="orders-container"></div>
+  <!-- ===== Orders Container ===== -->
+  <section id="ordersContainer" class="orders-container">
+    <!-- يتم تعبئتها من orders.js -->
+  </section>
 
-  <!-- Bottom Navigation -->
+  <!-- ===== Bottom Navigation ===== -->
   <nav class="bottom-nav">
+
     <a href="home.html" class="nav-item">
-      <div class="nav-icon">🏠</div>
-      <div class="nav-label">الرئيسية</div>
+      <span class="icon">🏠</span>
+      <small>الرئيسية</small>
     </a>
 
     <a href="orders.html" class="nav-item active">
-      <div class="nav-icon">📋</div>
-      <div class="nav-label">طلباتي</div>
+      <span class="icon">📋</span>
+      <small>طلباتي</small>
     </a>
 
     <a href="search.html" class="nav-item">
-      <div class="nav-icon">🔎</div>
-      <div class="nav-label">بحث</div>
+      <span class="icon">🔍</span>
+      <small>بحث</small>
     </a>
 
     <a href="profile.html" class="nav-item">
-      <div class="nav-icon">👤</div>
-      <div class="nav-label">حسابي</div>
+      <span class="icon">👤</span>
+      <small>حسابي</small>
     </a>
+
   </nav>
 
-  <!-- Firebase & Scripts -->
-  <script type="module" src="./js/firebase.js"></script>
-  <script type="module" src="./js/orders.js"></script>
-<script type="module" src="js/auth-guard.js"></script>
+  <!-- ===== Scripts ===== -->
+  <script type="module" src="js/firebase.js"></script>
+  <script type="module" src="js/auth-guard.js"></script>
+  <script type="module" src="js/orders.js"></script>
+  <script src="js/bottom-nav-anim.js"></script>
+
 </body>
 </html>

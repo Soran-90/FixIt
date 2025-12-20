@@ -1,49 +1,47 @@
-import { auth, db } from "./firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { auth } from "./firebase.js";
+import { onAuthStateChanged, signOut } from
+  "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { doc, getDoc } from
+  "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { db } from "./firebase.js";
 
-const orderCheckbox = document.getElementById("notif-order");
-const generalCheckbox = document.getElementById("notif-general");
-const saveButton = document.getElementById("saveNotifPrefs");
-const statusLine = document.getElementById("notifPrefsStatus");
-
-let currentUserId = null;
+const nameEl   = document.getElementById("profileName");
+const emailEl  = document.getElementById("profileEmail");
+const phoneEl  = document.getElementById("profilePhone");
+const roleEl   = document.getElementById("profileRole");
+const logoutBtn = document.getElementById("logoutBtn");
 
 onAuthStateChanged(auth, async (user) => {
-  if (!user) return;
-  currentUserId = user.uid;
-  await loadPreferences(user.uid);
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  emailEl.textContent = user.email;
+
+  const snap = await getDoc(doc(db, "users", user.uid));
+
+  if (!snap.exists()) {
+    console.warn("User document not found");
+    return;
+  }
+
+  const data = snap.data();
+
+  nameEl.textContent  = data.name  || "-";
+  phoneEl.textContent = data.phone || "-";
+  roleEl.textContent  = data.role  || "-";
 });
 
-async function loadPreferences(userId) {
-  try {
-    const userRef = doc(db, "users", userId);
-    const snap = await getDoc(userRef);
-    const prefs = snap.data()?.notificationPrefs || { orderStatus: true, general: true };
-
-    orderCheckbox.checked = prefs.orderStatus !== false;
-    generalCheckbox.checked = prefs.general !== false;
-  } catch (e) {
-    statusLine.textContent = "❌ تعذر تحميل الإعدادات";
-    console.error(e);
-  }
+/* ===== Logout ===== */
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      window.location.href = "login.html";
+    } catch (err) {
+      alert("حدث خطأ أثناء تسجيل الخروج");
+      console.error(err);
+    }
+  });
 }
-
-saveButton?.addEventListener("click", async () => {
-  if (!currentUserId) return;
-  statusLine.textContent = "جارٍ الحفظ...";
-  try {
-    const userRef = doc(db, "users", currentUserId);
-    await setDoc(userRef, {
-      notificationPrefs: {
-        orderStatus: orderCheckbox.checked,
-        general: generalCheckbox.checked
-      }
-    }, { merge: true });
-
-    statusLine.textContent = "✅ تم حفظ التفضيلات";
-  } catch (e) {
-    statusLine.textContent = "❌ فشل الحفظ";
-    console.error(e);
-  }
-});

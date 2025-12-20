@@ -1,51 +1,85 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FixIt - البحث</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>بحث - FixIt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS خاص بالزبون -->
+  <link rel="stylesheet" href="css/customer/customer.css">
 </head>
-<body dir="rtl">
 
-    <h2 class="title">بحث عن خدمة</h2>
+<body class="customer-page">
 
-    <input class="search-box" type="text" placeholder="اكتب اسم الخدمة…">
+  <!-- ===== Header ===== -->
+  <header class="page-header">
+    <h2>🔍 البحث</h2>
+    <p class="subtitle">ابحث عن خدمة الصيانة التي تحتاجها</p>
+  </header>
 
-    <div class="services">
-        <div class="service-card">كهرباء</div>
-        <div class="service-card">السباكة</div>
-        <div class="service-card">دهانات</div>
+  <!-- ===== Search Box ===== -->
+  <section class="search-section">
+    <div class="search-input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="اكتب اسم الخدمة (كهرباء، سباكة...)"
+      >
     </div>
+  </section>
 
-    <script src="js/app.js"></script>
-    <!-- START Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="home.html" class="nav-item">
-    <div class="nav-icon">🏠</div>
-    <div class="nav-label">الرئيسية</div>
-  </a>
+  <!-- ===== Services Result ===== -->
+  <section class="services-section">
+    <h3 class="section-title">الخدمات المتاحة</h3>
 
-  <a href="orders.html" class="nav-item">
-    <div class="nav-icon">📋</div>
-    <div class="nav-label">طلباتي</div>
-  </a>
+    <div class="services-grid">
+      <a class="service-card" href="new-order.html?service=كهرباء">
+        ⚡ كهرباء
+      </a>
 
-  <a href="search.html" class="nav-item">
-    <div class="nav-icon">🔍</div>
-    <div class="nav-label">بحث</div>
-  </a>
+      <a class="service-card" href="new-order.html?service=سباكة">
+        🚰 سباكة
+      </a>
 
-  <a href="profile.html" class="nav-item">
-    <div class="nav-icon">👤</div>
-    <div class="nav-label">حسابي</div>
-  </a>
-</nav>
+      <a class="service-card" href="new-order.html?service=دهانات">
+        🎨 دهانات
+      </a>
 
-<script src="js/bottom-nav.js"></script>
+      <a class="service-card" href="new-order.html?service=نجارة">
+        🪚 نجارة
+      </a>
+    </div>
+  </section>
 
-<!-- END Bottom Navigation -->
- <script type="module" src="js/auth-guard.js"></script>
+  <!-- ===== Bottom Navigation ===== -->
+  <nav class="bottom-nav">
+
+    <a href="home.html" class="nav-item">
+      <span class="icon">🏠</span>
+      <small>الرئيسية</small>
+    </a>
+
+    <a href="orders.html" class="nav-item">
+      <span class="icon">📋</span>
+      <small>طلباتي</small>
+    </a>
+
+    <a href="search.html" class="nav-item active">
+      <span class="icon">🔍</span>
+      <small>بحث</small>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+      <span class="icon">👤</span>
+      <small>حسابي</small>
+    </a>
+
+  </nav>
+
+  <!-- ===== Scripts ===== -->
+  <script type="module" src="js/auth-guard.js"></script>
+  <script src="js/bottom-nav-anim.js"></script>
 
 </body>
 </html>

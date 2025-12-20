@@ -1,0 +1,98 @@
+/* ================================
+   FixIt – Worker Styles
+   Used ONLY in worker pages
+   ================================ */
+
+body.worker-page {
+  background: #f4f6f8;
+  padding-bottom: 90px; /* مساحة للـ bottom nav */
+}
+
+/* ---------- Containers ---------- */
+.worker-page .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- Worker Orders ---------- */
+.worker-page .order-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.worker-page .order-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+/* ---------- Order Status ---------- */
+.worker-page .status-pending {
+  color: #f59e0b; /* برتقالي */
+}
+
+.worker-page .status-accepted {
+  color: #2563eb; /* أزرق */
+}
+
+.worker-page .status-done,
+.worker-page .status-completed {
+  color: #16a34a; /* أخضر */
+}
+
+/* ---------- Order Meta ---------- */
+.worker-page .order-meta {
+  font-size: 14px;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+/* ---------- Action Buttons ---------- */
+.worker-page .accept-btn {
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.worker-page .accept-btn:hover {
+  background: #16a34a;
+}
+
+.worker-page .complete-btn {
+  background: #0ea5e9;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.worker-page .complete-btn:hover {
+  background: #0284c7;
+}
+
+/* ---------- Worker Info ---------- */
+.worker-page .worker-info {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* ---------- Empty State ---------- */
+.worker-page .empty-state {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
+}

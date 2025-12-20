@@ -1,0 +1,169 @@
+/* ===== General ===== */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+/* ===== Page Layout ===== */
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 16px 90px; /* space for bottom nav */
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* ===== Cards ===== */
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.card-title {
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+/* ===== Text ===== */
+.card p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* ===== Switch ===== */
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.switch input {
+  transform: scale(1.2);
+}
+
+/* ===== Button ===== */
+.btn-primary {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 70px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: #6b7280;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+}
+
+.nav-item .icon {
+  font-size: 24px;
+}
+
+.nav-item .label {
+  font-size: 12px;
+}
+
+/* Active Page */
+.nav-item.active {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.nav-item.active .icon {
+  transform: translateY(-2px);
+}
+
+/* Hover / Touch */
+.nav-item:hover {
+  background: #f3f4f6;
+}
+/* ===== Logout Button ===== */
+.btn-logout {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #dc2626;
+}
+/* =========================
+   Home – Services Grid
+========================= */
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 10px;
+}
+
+.service-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+/* أيقونة داخل الكرت */
+.service-card::before {
+  content: "🛠️";
+  display: block;
+  font-size: 30px;
+  margin-bottom: 10px;
+}

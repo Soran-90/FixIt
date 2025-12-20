@@ -1,0 +1,161 @@
+/* ================================
+   FixIt – Admin Styles
+   Used ONLY in admin pages
+   ================================ */
+
+body.admin-page {
+  background: #f3f4f6;
+  padding-bottom: 90px; /* مساحة للـ bottom nav */
+}
+
+/* ---------- Containers ---------- */
+.admin-page .container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ---------- Admin Headings ---------- */
+.admin-page h1,
+.admin-page h2 {
+  color: #111827;
+}
+
+/* ---------- Admin Navigation ---------- */
+.admin-nav {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 760px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  z-index: 1000;
+}
+
+.admin-nav .nav-item {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: #555;
+  padding: 8px 6px;
+  border-radius: 10px;
+  transition: all .15s ease;
+}
+
+.admin-nav .nav-item span {
+  font-size: 18px;
+  display: block;
+}
+
+.admin-nav .nav-item small {
+  font-size: 12px;
+}
+
+.admin-nav .nav-item.active,
+.admin-nav .nav-item:hover {
+  color: #2563eb;
+  background: rgba(37,99,235,0.08);
+  transform: translateY(-2px);
+}
+
+/* ---------- Admin Order Cards ---------- */
+.admin-page .order-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ---------- Order Status Colors ---------- */
+.admin-page .status-pending {
+  color: #f59e0b; /* برتقالي */
+}
+
+.admin-page .status-assigned {
+  color: #2563eb; /* أزرق */
+}
+
+.admin-page .status-accepted {
+  color: #0ea5e9; /* سماوي */
+}
+
+.admin-page .status-done,
+.admin-page .status-completed {
+  color: #16a34a; /* أخضر */
+}
+
+/* ---------- Tables ---------- */
+.admin-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.admin-page th {
+  background: #f9fafb;
+  font-weight: 600;
+}
+
+.admin-page th,
+.admin-page td {
+  border: 1px solid #e5e7eb;
+  padding: 10px;
+  text-align: center;
+}
+
+/* ---------- Admin Stats ---------- */
+.admin-page .stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.admin-page .stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.admin-page .stat-card h3 {
+  margin: 0;
+  font-size: 26px;
+  color: #2563eb;
+}
+
+.admin-page .stat-card p {
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+/* ---------- Admin Profile ---------- */
+.admin-page .profile-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.admin-page .profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.admin-page .profile-row:last-child {
+  border-bottom: none;
+}
+
+.admin-page .profile-row .label {
+  color: #6b7280;
+  font-weight: 600;
+}

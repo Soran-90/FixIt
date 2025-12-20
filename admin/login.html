@@ -2,19 +2,38 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>دخول الأدمن</title>
+  <title>دخول الأدمن - FixIt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS العام -->
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin/admin.css">
 </head>
-<body>
 
-<div class="form-container">
-  <h2>دخول الأدمن</h2>
-  <input id="email" type="email" placeholder="البريد الإلكتروني">
-  <input id="password" type="password" placeholder="كلمة المرور">
-  <button id="loginBtn">تسجيل الدخول</button>
-</div>
+<body class="admin-page">
 
-<script type="module" src="../js/admin-login.js"></script>
+  <div class="form-container">
+    <h2 style="text-align:center">🔐 دخول الأدمن</h2>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="البريد الإلكتروني"
+      autocomplete="username"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="كلمة المرور"
+      autocomplete="current-password"
+    >
+
+    <button id="loginBtn">تسجيل الدخول</button>
+  </div>
+
+  <!-- منطق تسجيل دخول الأدمن -->
+  <script type="module" src="../js/admin-login.js"></script>
 
 </body>
 </html>
