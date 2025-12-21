@@ -230,3 +230,10 @@ button.secondary {
 .bottom-nav .nav-item:hover {
   color: #2f5bea;
 }
+/* ===== Global Reset & Typography ===== */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
