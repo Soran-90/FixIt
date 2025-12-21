@@ -5,11 +5,12 @@
   <title>بحث - FixIt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS خاص بالزبون -->
-  <link rel="stylesheet" href="css/customer/customer.css">
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="../../css/common/common.css">
+  <link rel="stylesheet" href="search.css">
 </head>
 
-<body class="customer-page">
+<body class="customer-page search-page">
 
   <!-- ===== Header ===== -->
   <header class="page-header">
@@ -23,6 +24,7 @@
       <span class="search-icon">🔍</span>
       <input
         type="text"
+        id="searchInput"
         class="search-input"
         placeholder="اكتب اسم الخدمة (كهرباء، سباكة...)"
       >
@@ -33,20 +35,20 @@
   <section class="services-section">
     <h3 class="section-title">الخدمات المتاحة</h3>
 
-    <div class="services-grid">
-      <a class="service-card" href="new-order.html?service=كهرباء">
+    <div class="services-grid" id="servicesGrid">
+      <a class="service-card" href="../new-order/new-order.html?service=كهرباء">
         ⚡ كهرباء
       </a>
 
-      <a class="service-card" href="new-order.html?service=سباكة">
+      <a class="service-card" href="../new-order/new-order.html?service=سباكة">
         🚰 سباكة
       </a>
 
-      <a class="service-card" href="new-order.html?service=دهانات">
+      <a class="service-card" href="../new-order/new-order.html?service=دهانات">
         🎨 دهانات
       </a>
 
-      <a class="service-card" href="new-order.html?service=نجارة">
+      <a class="service-card" href="../new-order/new-order.html?service=نجارة">
         🪚 نجارة
       </a>
     </div>
@@ -55,12 +57,12 @@
   <!-- ===== Bottom Navigation ===== -->
   <nav class="bottom-nav">
 
-    <a href="home.html" class="nav-item">
+    <a href="../home/home.html" class="nav-item">
       <span class="icon">🏠</span>
       <small>الرئيسية</small>
     </a>
 
-    <a href="orders.html" class="nav-item">
+    <a href="../orders/orders.html" class="nav-item">
       <span class="icon">📋</span>
       <small>طلباتي</small>
     </a>
@@ -70,7 +72,7 @@
       <small>بحث</small>
     </a>
 
-    <a href="profile.html" class="nav-item">
+    <a href="../profile/profile.html" class="nav-item">
       <span class="icon">👤</span>
       <small>حسابي</small>
     </a>
@@ -78,8 +80,9 @@
   </nav>
 
   <!-- ===== Scripts ===== -->
-  <script type="module" src="js/auth-guard.js"></script>
-  <script src="js/bottom-nav-anim.js"></script>
+  <script type="module" src="../../js/auth-guard.js"></script>
+  <script type="module" src="search.js"></script>
+  <script src="../../js/bottom-nav-anim.js"></script>
 
 </body>
 </html>
