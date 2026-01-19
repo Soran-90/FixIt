@@ -1,0 +1,43 @@
+/* Worker Profile */
+
+.page-header {
+  padding: 20px 16px 10px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Section */
+.profile-section {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Cards */
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+.rating-card h3 {
+  margin-top: 0;
+}
+
+/* Logout */
+.btn-danger {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #ef4444;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}

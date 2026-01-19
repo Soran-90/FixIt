@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>حسابي - العامل | FixIt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/common/common.css">
+  <link rel="stylesheet" href="profile.css">
+</head>
+
+<body class="worker-page">
+
+  <!-- Header -->
+  <header class="page-header">
+    <h2>👤 حسابي</h2>
+    <p class="subtitle">معلوماتك وملخص أدائك</p>
+  </header>
+
+  <!-- Profile Card -->
+  <section class="profile-section">
+
+    <div class="profile-card">
+      <p><strong>الاسم:</strong> <span id="workerName">—</span></p>
+      <p><strong>الإيميل:</strong> <span id="workerEmail">—</span></p>
+      <p><strong>الدور:</strong> <span id="workerRole">—</span></p>
+    </div>
+
+    <div class="profile-card rating-card">
+      <h3>⭐ التقييم</h3>
+      <p><strong>المتوسط:</strong> <span id="ratingAvg">—</span></p>
+      <p><strong>عدد التقييمات:</strong> <span id="ratingCount">—</span></p>
+    </div>
+
+    <button id="logoutBtn" class="btn-danger">تسجيل الخروج</button>
+
+  </section>
+
+  <!-- Worker Bottom Nav -->
+  <nav class="bottom-nav worker-nav">
+    <a href="../home/home.html" class="nav-item">
+      <span class="icon">🏠</span>
+      <small>الرئيسية</small>
+    </a>
+
+    <a href="../orders/orders.html" class="nav-item">
+      <span class="icon">📦</span>
+      <small>طلباتي</small>
+    </a>
+
+    <a href="profile.html" class="nav-item active">
+      <span class="icon">👤</span>
+      <small>حسابي</small>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="../../worker/guard.js"></script>
+  <script type="module" src="profile.js"></script>
+</body>
+</html>

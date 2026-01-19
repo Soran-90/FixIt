@@ -1,274 +1,88 @@
 import { auth, db } from "../../js/firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { onAuthStateChanged } from
+  "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import {
   collection,
   query,
   where,
-  getDocs,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  getDocs
+} from
+  "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-const pendingContainer = document.getElementById("pendingOrders");
-const myContainer = document.getElementById("myOrders");
-const avgEl = document.getElementById("ratingAvg");
-const countEl = document.getElementById("ratingCount");
-const wordsEl = document.getElementById("topWords");
+/* Elements */
+const totalEl = document.getElementById("totalOrders");
+const activeEl = document.getElementById("activeOrders");
+const ratingEl = document.getElementById("ratingAvg");
+const newOrdersEl = document.getElementById("newOrders");
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
 
-  // حفظ موقع العامل
-  navigator.geolocation.getCurrentPosition(async (pos) => {
-    await updateDoc(doc(db, "users", user.uid), {
-      workerLocation: { lat: pos.coords.latitude, lng: pos.coords.longitude }
-    });
-  });
-
+  loadStats(user.uid);
   loadNewOrders(user.uid);
-  loadMyOrders(user.uid);
 });
 
-async function loadNewOrders(workerId) {
-  pendingContainer.innerHTML = "⏳ جاري تحميل الطلبات الجديدة...";
-
-  // 1) طلبات عامة للجميع: pending + assignedTo == null
-  const qPublic = query(
-    collection(db, "orders"),
-    where("status", "==", "pending")
-  );
-
-  // 2) طلبات مخصصة لهذا العامل: assigned + assignedTo == workerId
-  const qAssigned = query(
-    collection(db, "orders"),
-    where("status", "==", "assigned"),
-    where("assignedTo", "==", workerId)
-  );
-
-  const [snapPublic, snapAssigned] = await Promise.all([getDocs(qPublic), getDocs(qAssigned)]);
-
-  pendingContainer.innerHTML = "";
-
-  const allDocs = [];
-  snapPublic.forEach(d => allDocs.push(d));
-  snapAssigned.forEach(d => allDocs.push(d));
-
-  if (allDocs.length === 0) {
-    pendingContainer.innerHTML = "لا توجد طلبات جديدة";
-    return;
-  }
-
-  allDocs.forEach((orderSnap) => {
-    const o = orderSnap.data();
-
-    const div = document.createElement("div");
-    div.className = "order-card";
-
-    div.innerHTML = `
-      <p><strong>الخدمة:</strong> ${o.serviceType}</p>
-      <p><strong>الوصف:</strong> ${o.description || ""}</p>
-      <p><strong>العنوان:</strong> ${o.address || "—"}</p>
-      <p><strong>الحالة:</strong> ${o.status}</p>
-      <button>قبول الطلب</button>
-    `;
-
-    const acceptBtn = div.querySelector("button");
-    acceptBtn.onclick = async () => {
-      acceptBtn.disabled = true;
-      acceptBtn.textContent = "جاري القبول...";
-
-      try {
-        await updateDoc(doc(db, "orders", orderSnap.id), {
-          status: "accepted",
-          assignedTo: workerId
-        });
-
-        // إشعار للزبون
-        await addDoc(collection(db, "notifications"), {
-          userId: o.userId,
-          message: "🧑‍🔧 تم قبول طلبك من قبل العامل",
-          read: false,
-          createdAt: serverTimestamp()
-        });
-
-        loadNewOrders(workerId);
-        loadMyOrders(workerId);
-      } catch (err) {
-        console.error(err);
-        alert("حدث خطأ أثناء قبول الطلب. يرجى المحاولة مرة أخرى.");
-        acceptBtn.disabled = false;
-        acceptBtn.textContent = "قبول الطلب";
-      }
-    };
-
-    pendingContainer.appendChild(div);
-  });
-}
-
-async function loadMyOrders(workerId) {
-  myContainer.innerHTML = "⏳ جاري تحميل طلباتك...";
-
+async function loadStats(workerId) {
   const snap = await getDocs(
     query(collection(db, "orders"), where("assignedTo", "==", workerId))
   );
 
+  let total = 0;
+  let active = 0;
+
+  snap.forEach((d) => {
+    total++;
+    const s = d.data().status;
+    if (s === "accepted" || s === "assigned") active++;
+  });
+
+  totalEl.textContent = total;
+  activeEl.textContent = active;
+
+  // rating من users
+  const userSnap = await fetch(`../../api/get-user-rating?uid=${workerId}`).catch(() => null);
+  // fallback
+  ratingEl.textContent = "—";
+}
+
+async function loadNewOrders(workerId) {
+  newOrdersEl.innerHTML = "";
+
+  const q = query(
+    collection(db, "orders"),
+    where("status", "in", ["pending", "assigned"])
+  );
+
+  const snap = await getDocs(q);
+
   if (snap.empty) {
-    myContainer.innerHTML = "لا توجد طلبات لديك";
-    updateRatingSummary([]);
+    newOrdersEl.innerHTML = `<p class="muted">لا توجد طلبات جديدة</p>`;
     return;
   }
 
-  myContainer.innerHTML = "";
+  snap.forEach((docSnap) => {
+    const o = docSnap.data();
 
-  const orders = [];
+    const card = document.createElement("div");
+    card.className = "order-card";
 
-  snap.forEach((orderSnap) => {
-    orders.push({ id: orderSnap.id, ...orderSnap.data() });
-  });
+    card.innerHTML = `
+      <p><strong>${o.serviceType}</strong></p>
+      <p class="muted">${o.address || "—"}</p>
+      <span class="badge status-${o.status}">
+        ${translateStatus(o.status)}
+      </span>
+    `;
 
-  updateRatingSummary(orders);
-
-  orders.forEach((o) => {
-    const mapLink = o.location
-      ? `https://www.google.com/maps?q=${o.location.lat},${o.location.lng}`
-      : null;
-
-    const div = document.createElement("div");
-    div.className = "order-card";
-
-      div.innerHTML = `
-        <p><strong>الخدمة:</strong> ${escapeHTML(o.serviceType || "")}</p>
-        <p><strong>العنوان:</strong> ${escapeHTML(o.address || "—")}</p>
-        <p><strong>الحالة:</strong> ${escapeHTML(o.status || "")}</p>
-        ${mapLink ? `<a href="${mapLink}" target="_blank">📍 فتح الموقع</a>` : ""}
-      `;
-
-      if (o.rated) {
-        const ratingNotes = document.createElement("div");
-        ratingNotes.className = "rating-notes";
-
-        const ratingLine = document.createElement("p");
-        ratingLine.textContent = `تقييم العميل: ${"⭐".repeat(o.rating || 0)} (${o.rating || 0}/5)`;
-        ratingNotes.appendChild(ratingLine);
-
-        if (o.ratingPositive) {
-          const positiveP = document.createElement("p");
-          positiveP.innerHTML = `<strong>أسباب الإعجاب:</strong> ${escapeHTML(o.ratingPositive)}`;
-          ratingNotes.appendChild(positiveP);
-        }
-
-        if (o.ratingNegative) {
-          const negativeP = document.createElement("p");
-          negativeP.innerHTML = `<strong>ملاحظات للتحسين:</strong> ${escapeHTML(o.ratingNegative)}`;
-          ratingNotes.appendChild(negativeP);
-        }
-
-        if (o.ratingReply) {
-          const replyP = document.createElement("p");
-          replyP.className = "reply-box";
-          replyP.innerHTML = `<strong>ردك:</strong> ${escapeHTML(o.ratingReply)}`;
-          ratingNotes.appendChild(replyP);
-        }
-
-        div.appendChild(ratingNotes);
-      }
-
-    if (o.status === "accepted") {
-      const btn = document.createElement("button");
-      btn.textContent = "إنهاء الطلب";
-      btn.onclick = async () => {
-        await updateDoc(doc(db, "orders", o.id), {
-          status: "completed",
-          completedAt: serverTimestamp()
-        });
-
-        await addDoc(collection(db, "notifications"), {
-          userId: o.userId,
-          message: "✅ تم إنهاء طلبك بنجاح",
-          read: false,
-          createdAt: serverTimestamp()
-        });
-
-        loadMyOrders(workerId);
-      };
-      div.appendChild(btn);
-    }
-
-    if (o.rated && !o.ratingReply) {
-      const replyBox = document.createElement("div");
-      replyBox.className = "reply-box";
-      replyBox.innerHTML = `
-        <p style="margin-top:0;"><strong>رد على العميل:</strong></p>
-        <textarea maxlength="200" placeholder="أجب باحترام ووضوح"></textarea>
-        <button>حفظ الرد</button>
-      `;
-
-      const replyBtn = replyBox.querySelector("button");
-      replyBtn.onclick = async () => {
-        const replyText = replyBox.querySelector("textarea").value.trim();
-        if (!replyText) {
-          alert("يرجى كتابة رد قصير");
-          return;
-        }
-
-        replyBtn.disabled = true;
-        await updateDoc(doc(db, "orders", o.id), {
-          ratingReply: replyText,
-          ratingReplyAt: serverTimestamp(),
-          ratingReplyBy: workerId
-        });
-        loadMyOrders(workerId);
-      };
-      div.appendChild(replyBox);
-    }
-
-    myContainer.appendChild(div);
+    newOrdersEl.appendChild(card);
   });
 }
 
-function updateRatingSummary(orders) {
-  if (!avgEl || !countEl || !wordsEl) return;
-
-  const ratedOrders = orders.filter((o) => o.rated && o.rating);
-  if (ratedOrders.length === 0) {
-    avgEl.textContent = "—";
-    countEl.textContent = "لا تقييمات بعد";
-    wordsEl.textContent = "—";
-    return;
+function translateStatus(s) {
+  switch (s) {
+    case "pending": return "قيد الانتظار";
+    case "assigned": return "مُسند";
+    case "accepted": return "قيد التنفيذ";
+    default: return s;
   }
-
-  const total = ratedOrders.reduce((sum, o) => sum + (o.rating || 0), 0);
-  const avg = (total / ratedOrders.length).toFixed(2);
-  avgEl.textContent = `${avg} / 5`;
-  countEl.textContent = `${ratedOrders.length} تقييم`;
-
-  const wordCounts = {};
-  ratedOrders.forEach((o) => {
-    [o.ratingPositive, o.ratingNegative].forEach((txt) => {
-      if (!txt) return;
-      txt.split(/\s+/).forEach((word) => {
-        const clean = word.replace(/[^\p{L}\p{N}]/gu, "").toLowerCase();
-        if (clean.length < 3) return;
-        wordCounts[clean] = (wordCounts[clean] || 0) + 1;
-      });
-    });
-  });
-
-  const topWords = Object.entries(wordCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(([w, c]) => `${w} (${c})`);
-
-  wordsEl.textContent = topWords.length ? topWords.join(", ") : "لا توجد كلمات متكررة بعد";
-}
-
-function escapeHTML(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }

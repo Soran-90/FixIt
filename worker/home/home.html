@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>لوحة العامل - FixIt</title>
+  <title>الرئيسية - العامل | FixIt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- CSS -->
@@ -12,22 +12,61 @@
 
 <body class="worker-page">
 
-  <!-- ملخص التقييم -->
-  <section class="order-card" id="ratingSummary" aria-label="ملخص تقييمات العامل">
-    <h3>📈 ملخص التقييمات</h3>
-    <p><strong>المتوسط:</strong> <span id="ratingAvg">—</span></p>
-    <p><strong>عدد التقييمات:</strong> <span id="ratingCount">—</span></p>
-    <p><strong>أكثر الكلمات تكراراً:</strong> <span id="topWords">—</span></p>
+  <!-- Header -->
+  <header class="page-header">
+    <h2>👋 أهلاً بك</h2>
+    <p class="subtitle">لوحة العامل الرئيسية</p>
+  </header>
+
+  <!-- Quick Stats -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="icon">📦</span>
+      <p class="value" id="totalOrders">—</p>
+      <p class="label">كل الطلبات</p>
+    </div>
+
+    <div class="stat-card">
+      <span class="icon">⏳</span>
+      <p class="value" id="activeOrders">—</p>
+      <p class="label">طلبات نشطة</p>
+    </div>
+
+    <div class="stat-card">
+      <span class="icon">⭐</span>
+      <p class="value" id="ratingAvg">—</p>
+      <p class="label">التقييم</p>
+    </div>
   </section>
 
-  <h2>🧑‍🔧 طلبات جديدة</h2>
-  <div id="pendingOrders"></div>
+  <!-- New Orders -->
+  <section class="section">
+    <h3 class="section-title">🧑‍🔧 طلبات جديدة</h3>
+    <div id="newOrders" class="orders-list">
+      <p class="muted">جاري التحميل...</p>
+    </div>
+  </section>
 
-  <h2>📦 طلباتي</h2>
-  <div id="myOrders"></div>
+  <!-- Worker Bottom Nav -->
+  <nav class="bottom-nav worker-nav">
+    <a href="home.html" class="nav-item active">
+      <span class="icon">🏠</span>
+      <small>الرئيسية</small>
+    </a>
+
+    <a href="../orders/orders.html" class="nav-item">
+      <span class="icon">📦</span>
+      <small>طلباتي</small>
+    </a>
+
+    <a href="../profile/profile.html" class="nav-item">
+      <span class="icon">👤</span>
+      <small>حسابي</small>
+    </a>
+  </nav>
 
   <!-- Scripts -->
-  <script type="module" src="../../js/auth-guard.js"></script>
+  <script type="module" src="../../worker/guard.js"></script>
   <script type="module" src="home.js"></script>
 </body>
 </html>

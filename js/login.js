@@ -1,5 +1,6 @@
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const loginBtn = document.getElementById("loginBtn");
 
@@ -13,12 +14,29 @@ loginBtn.addEventListener("click", async () => {
   }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    const uid = cred.user.uid;
 
-    // ✅ تحويل مبدئي
-    window.location.href = "home.html";
+    const snap = await getDoc(doc(db, "users", uid));
+    if (!snap.exists()) {
+      alert("❌ الحساب غير موجود");
+      return;
+    }
+
+    const role = snap.data().role;
+
+    if (role === "customer") {
+      window.location.href = "/customer/home/home.html";
+    } else if (role === "worker") {
+      window.location.href = "/worker/home/home.html";
+    } else if (role === "admin") {
+      window.location.href = "/admin/dashboard/dashboard.html";
+    } else {
+      alert("❌ دور المستخدم غير معروف");
+    }
 
   } catch (e) {
     alert("❌ خطأ في بيانات الدخول");
+    console.error(e);
   }
 });
