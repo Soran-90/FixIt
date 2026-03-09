@@ -1,0 +1,200 @@
+/* css/style.css — ملف CSS عام مشترك لجميع الصفحات */
+/* يمتد من common.css ويضيف أنماط التطبيق العامة */
+
+@import url('common/common.css');
+
+/* ─── لوحة التحكم (Dashboard) ─────────────────────────────────── */
+
+.dashboard-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 16px 100px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dashboard-subtitle {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+}
+
+.filter-button {
+  width: auto;
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 13px;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+}
+
+.filter-button.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.logout-button {
+  width: auto;
+  padding: 8px 16px;
+  margin: 0;
+  font-size: 13px;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 8px;
+}
+
+/* ─── بحث ─────────────────────────────────────────────────────── */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── شبكة الإحصاء ─────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0 0 6px;
+}
+
+.stat-trend {
+  font-size: 12px;
+  color: #10b981;
+}
+
+/* ─── شارات ───────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge.success { background: #dcfce7; color: #166534; }
+.badge.warning { background: #fef9c3; color: #854d0e; }
+.badge.info    { background: #dbeafe; color: #1e40af; }
+
+/* ─── شبكة الرسوم ─────────────────────────────────────────────── */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.chart-card,
+.results-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.chart-header {
+  margin-bottom: 12px;
+}
+
+.chart-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.chart-caption {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ─── صفوف النتائج ─────────────────────────────────────────────── */
+.result-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+  align-items: center;
+  font-size: 13px;
+}
+
+.result-row:last-child { border-bottom: none; }
+
+.hide-mobile { display: none; }
+
+@media (min-width: 600px) {
+  .hide-mobile { display: block; }
+}
+
+.updated-at {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: left;
+}

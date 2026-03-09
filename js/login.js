@@ -30,7 +30,7 @@ loginBtn.addEventListener("click", async () => {
     } else if (role === "worker") {
       window.location.href = "/worker/home/home.html";
     } else if (role === "admin") {
-      window.location.href = "/admin/dashboard/dashboard.html";
+      window.location.href = "/admin/dashboard.html";
     } else {
       alert("❌ دور المستخدم غير معروف");
     }

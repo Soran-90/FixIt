@@ -7,16 +7,22 @@
   <link rel="stylesheet" href="../css/admin/admin.css">
 </head>
 
-<body>
-<body class="admin-page"></body>
-<h2>📋 إدارة الطلبات</h2>
+<body class="admin-page">
 
-<div id="ordersContainer"></div>
+<div class="page-header" style="padding: 20px 16px 0;">
+  <h2>📋 إدارة الطلبات</h2>
+</div>
+
+<div style="padding: 0 16px 100px;">
+  <div id="ordersContainer"></div>
+  <div id="paginationContainer" style="text-align:center; margin-top:16px;"></div>
+</div>
+
+<div id="adminNav"></div>
 
 <!-- حماية الأدمن -->
 <script type="module" src="../js/admin-guard.js"></script>
 <script type="module" src="../js/admin-orders.js"></script>
-<div id="adminNav"></div>
 
 <script>
   fetch("admin-nav.html")
