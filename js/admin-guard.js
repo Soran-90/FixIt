@@ -11,7 +11,7 @@ onAuthStateChanged(auth, async (user) => {
   checked = true;
 
   if (!user) {
-    window.location.replace("login.html");
+    window.location.replace("/login.html");
     return;
   }
 
@@ -20,7 +20,7 @@ onAuthStateChanged(auth, async (user) => {
     const snap = await getDoc(ref);
 
     if (!snap.exists() || snap.data().role !== "admin") {
-      window.location.replace("login.html");
+      window.location.replace("/login.html");
       return;
     }
 
@@ -28,6 +28,6 @@ onAuthStateChanged(auth, async (user) => {
 
   } catch (e) {
     console.error(e);
-    window.location.replace("login.html");
+    window.location.replace("/login.html");
   }
 });

@@ -40,9 +40,3 @@ logoutBtn.addEventListener("click", async () => {
   await signOut(auth);
   window.location.href = "../../login.html";
 });
-const userSnap = await getDoc(doc(db, "users", user.uid));
-
-if (userSnap.data().role !== "worker") {
-  alert("❌ هذه الصفحة خاصة بالعامل");
-  return;
-}
